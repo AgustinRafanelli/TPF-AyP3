@@ -5,10 +5,13 @@ Consigna:
 Desarrollar un sistema de estudiantes en C. Debe permitir:
 
 -Dar de alta y listar estudiantes
+
 -Buscar estudiantes por nombre
+
 -Buscar estudiantes por rango de edad
 
 Además cada estudiante puede anotarse en N materias.
+
 -Dar de alta y listar materias
 -Anotarse en una materia
 -Rendir una materia
