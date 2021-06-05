@@ -1,38 +1,29 @@
 #include "estructuras.c"
 
-typedef struct estructuraEstudiante{
-    char *nombre;
-    int legajo;
-} Estudiante;
+Nodo *lista;
 
 void altaEstudiante(char *nombre, int legajo){
     Estudiante estudiante;
     estudiante.nombre = nombre;
     estudiante.legajo = legajo;
     //Se agrega el alumno a la lista
+    lista = agregarElemento(lista, estudiante);
 }
 
 void iniciarSistema(){
     //Se crea la lista
+    lista = crearLista();
+}
+
+void imprimir(){
+    imprimirLista(lista);
 }
 
 
 
 int main() {
-
-    /*Nodo *lista = crearLista();
-    lista = agregarElemento(lista, 1);
-    imprimirLista(lista);
-    agregarElemento(lista, 2);
-    imprimirLista(lista);
-    agregarElemento(lista, 3);
-    imprimirLista(lista);
-    agregarElemento(lista, 4);
-    imprimirLista(lista);
-    agregarElemento(lista, 5);
-    
-    imprimirLista(lista);*/
-
-
-
+    iniciarSistema();
+    altaEstudiante("Juan Roman Riquelme", 15632);
+    altaEstudiante("Carlos Saul Menem", 25556);
+    imprimir();
 }

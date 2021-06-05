@@ -1,15 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct estructuraEstudiante{
+    char *nombre;
+    int legajo;
+} Estudiante;
+
 typedef struct estructuraNodo {
-    int valor;
+    Estudiante estudiante;
     struct estructuraNodo *proximo;
     
 } Nodo;
 
-Nodo *agregarElemento(Nodo *lista, int valor) {
+Nodo *agregarElemento(Nodo *lista, Estudiante estudiante) {
     Nodo *nodoNuevo = malloc(sizeof(Nodo));
-    nodoNuevo->valor = valor;
+    nodoNuevo->estudiante = estudiante;
     nodoNuevo->proximo = NULL;
     if (lista == NULL) {
         lista = nodoNuevo;
@@ -52,7 +57,7 @@ Nodo obtenerNodo (Nodo *lista, int posicion){
         for(int i = 0; i < posicion ;i =i+1){
             cursor = cursor->proximo;
         }
-        nodoObtenido.valor = cursor->valor;
+        nodoObtenido.estudiante = cursor->estudiante;
         return nodoObtenido;
     }
 }
@@ -77,7 +82,7 @@ void imprimirLista(Nodo *lista){
     }else{
         Nodo *cursor = lista;
         while (cursor != NULL) {
-            printf("%d, ", cursor->valor);
+            printf("%s (%d), ", cursor->estudiante.nombre, cursor->estudiante.legajo);
             cursor = cursor->proximo;
         }
         printf("\n");
