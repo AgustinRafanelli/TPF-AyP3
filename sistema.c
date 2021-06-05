@@ -25,5 +25,6 @@ int main() {
     iniciarSistema();
     altaEstudiante("Juan Roman Riquelme", 15632);
     altaEstudiante("Carlos Saul Menem", 25556);
+    altaEstudiante("Marcos Galperin", 11123);
     imprimir();
 }

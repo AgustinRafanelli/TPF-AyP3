@@ -25,6 +25,7 @@ Nodo *agregarElemento(Nodo *lista, Estudiante estudiante) {
         }
         cursor->proximo = nodoNuevo;
     }
+    return lista;
 }
 
 Nodo *crearLista() {
