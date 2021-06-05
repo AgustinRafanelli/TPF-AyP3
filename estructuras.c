@@ -7,7 +7,7 @@ typedef struct estructuraNodo {
     
 } Nodo;
 
-void agregarElemento(Nodo *lista, int valor) {
+Nodo *agregarElemento(Nodo *lista, int valor) {
     Nodo *nodoNuevo = malloc(sizeof(Nodo));
     nodoNuevo->valor = valor;
     nodoNuevo->proximo = NULL;
@@ -77,25 +77,9 @@ void imprimirLista(Nodo *lista){
     }else{
         Nodo *cursor = lista;
         while (cursor != NULL) {
-            printf("%d\n", cursor->valor);
+            printf("%d, ", cursor->valor);
             cursor = cursor->proximo;
         }
+        printf("\n");
     }
-}
-
-int main() {
-
-    Nodo *lista = crearLista();
-    agregarElemento(lista, 1);
-    imprimirLista(lista);
-   /* agregarElemento(lista, 2);
-    imprimirLista(lista);
-    lista = agregarElemento(lista, 3);
-    imprimirLista(lista);
-    lista = agregarElemento(lista, 4);
-    imprimirLista(lista);
-    lista = agregarElemento(lista, 5);
-    
-    imprimirLista(lista);*/
-
 }
