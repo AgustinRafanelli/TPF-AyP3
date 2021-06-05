@@ -19,7 +19,10 @@ int main() {
     lista = crearLista();
     lista = altaEstudiante("Juan Roman Riquelme", 30, lista);
     lista = altaEstudiante("Carlos Saul Menem", 50, lista);
-    lista = altaEstudiante("Marcos Galperin", 35, lista);
     lista = altaEstudiante("Leopoldo Garcia", 38, lista);
-    imprimirLista(lista);
+    lista = altaEstudiante("Marcos Galperin", 35, lista);
+    //imprimirLista(lista);
+    Nodo *lista2 = crearLista();
+    lista2 = obtenerEstudiantesPorEdad(lista, 30, 40);
+    imprimirLista(lista2);
 }
