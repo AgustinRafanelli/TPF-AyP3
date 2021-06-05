@@ -1,30 +1,25 @@
-#include "estructuras.c"
+#include "estructura_estudiantes.c"
 
-Nodo *lista;
 
-void altaEstudiante(char *nombre, int legajo){
+Nodo *altaEstudiante(char *nombre, int edad, Nodo *lista){
     Estudiante estudiante;
     estudiante.nombre = nombre;
-    estudiante.legajo = legajo;
+    estudiante.edad = edad;
     //Se agrega el alumno a la lista
     lista = agregarElemento(lista, estudiante);
+    return lista;
 }
 
-void iniciarSistema(){
-    //Se crea la lista
-    lista = crearLista();
+void iniciarSistema(Nodo *lista){
+    
 }
-
-void imprimir(){
-    imprimirLista(lista);
-}
-
-
 
 int main() {
-    iniciarSistema();
-    altaEstudiante("Juan Roman Riquelme", 15632);
-    altaEstudiante("Carlos Saul Menem", 25556);
-    altaEstudiante("Marcos Galperin", 11123);
-    imprimir();
+    Nodo *lista;
+    lista = crearLista();
+    lista = altaEstudiante("Juan Roman Riquelme", 30, lista);
+    lista = altaEstudiante("Carlos Saul Menem", 50, lista);
+    lista = altaEstudiante("Marcos Galperin", 35, lista);
+    lista = altaEstudiante("Leopoldo Garcia", 38, lista);
+    imprimirLista(lista);
 }
