@@ -1,26 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "estructura_materias.c"
 
 typedef struct estructuraEstudiante{
     char *nombre;
     int legajo;
     int edad;
+    NodoMateria *materias;
+
 } Estudiante;
 
-typedef struct estructuraNodo {
+typedef struct NodoEstudiante {
     Estudiante estudiante;
-    struct estructuraNodo *proximo;
+    struct NodoEstudiante *proximo;
     
-} Nodo;
+} NodoEstudiante;
 
-Nodo *agregarElemento(Nodo *lista, Estudiante estudiante) {
-    Nodo *nodoNuevo = malloc(sizeof(Nodo));
+NodoEstudiante *agregarElemento(NodoEstudiante *lista, Estudiante estudiante) {
+    NodoEstudiante *nodoNuevo = malloc(sizeof(NodoEstudiante));
     nodoNuevo->estudiante = estudiante;
     nodoNuevo->proximo = NULL;
     if (lista == NULL) {
         lista = nodoNuevo;
     } else {
-        Nodo *cursor = lista;
+        NodoEstudiante *cursor = lista;
         while (cursor->proximo != NULL) {
             cursor = cursor->proximo;
         }
@@ -29,15 +32,15 @@ Nodo *agregarElemento(Nodo *lista, Estudiante estudiante) {
     return lista;
 }
 
-Nodo *agregarElementoPorEdad(Nodo *lista, Estudiante estudiante) {
-    Nodo *nodoNuevo = malloc(sizeof(Nodo));
+NodoEstudiante *agregarElementoPorEdad(NodoEstudiante *lista, Estudiante estudiante) {
+    NodoEstudiante *nodoNuevo = malloc(sizeof(NodoEstudiante));
     nodoNuevo->estudiante = estudiante;
     nodoNuevo->proximo = NULL;
     if (lista == NULL || lista->estudiante.edad > nodoNuevo->estudiante.edad) {
         nodoNuevo->proximo = lista;
         lista = nodoNuevo;
     } else {
-        Nodo *cursor = lista;
+        NodoEstudiante *cursor = lista;
         while (cursor->proximo != NULL && cursor->proximo->estudiante.edad < nodoNuevo->estudiante.edad) {
             cursor = cursor->proximo;
         }
@@ -49,18 +52,28 @@ Nodo *agregarElementoPorEdad(Nodo *lista, Estudiante estudiante) {
     return lista;
 }
 
-Nodo *crearLista() {
-    Nodo *lista = malloc(sizeof(Nodo));
+NodoEstudiante *altaEstudiante(char *nombre, int edad, NodoEstudiante *lista){
+    Estudiante estudiante;
+    estudiante.nombre = nombre;
+    estudiante.edad = edad;
+    estudiante.materias = crearListaMaterias();
+    //Se agrega el alumno a la lista
+    lista = agregarElemento(lista, estudiante);
+    return lista;
+}
+
+NodoEstudiante *crearLista() {
+    NodoEstudiante *lista = malloc(sizeof(NodoEstudiante));
     lista = NULL;
     return lista;
 }
 
-int largoDeLista(Nodo *lista){
+int largoDeLista(NodoEstudiante *lista){
     if (lista == NULL) {
        return 0;
     } else {
         int contador = 0;
-        Nodo *cursor = lista;
+        NodoEstudiante *cursor = lista;
         while (cursor != NULL) {
             contador = contador+1;
             cursor = cursor->proximo;
@@ -70,12 +83,12 @@ int largoDeLista(Nodo *lista){
     return 0;
 }
 
-Estudiante obtenerEstudiante (Nodo *lista, char *nombre){
+Estudiante obtenerEstudiante (NodoEstudiante *lista, char *nombre){
     Estudiante estudianteObtenido;
     if(lista == NULL){
         return estudianteObtenido;
     } else{
-        Nodo *cursor = lista;
+        NodoEstudiante *cursor = lista;
         while(cursor->proximo != NULL && cursor->estudiante.nombre != nombre){
             cursor = cursor->proximo;
         }
@@ -86,12 +99,12 @@ Estudiante obtenerEstudiante (Nodo *lista, char *nombre){
     }
 }
 
-Nodo *obtenerEstudiantesPorEdad (Nodo *lista, int min, int max){
-    Nodo *listaNueva;
+NodoEstudiante *obtenerEstudiantesPorEdad (NodoEstudiante *lista, int min, int max){
+    NodoEstudiante *listaNueva;
     if(lista == NULL){
         return listaNueva;
     } else{
-        Nodo *cursor = lista;
+        NodoEstudiante *cursor = lista;
         while(cursor != NULL){
             if(cursor->estudiante.edad >= min && cursor->estudiante.edad <= max){
                 listaNueva = agregarElementoPorEdad(listaNueva, cursor->estudiante);
@@ -102,25 +115,25 @@ Nodo *obtenerEstudiantesPorEdad (Nodo *lista, int min, int max){
     }
 }
 
-void eliminarNodo (Nodo *lista, int posicion){
+void eliminarNodo (NodoEstudiante *lista, int posicion){
     if(lista == NULL || posicion >= largoDeLista(lista)){
         return;
     } else{
-        Nodo *cursor = lista;
+        NodoEstudiante *cursor = lista;
         for(int i = 0; i < posicion-1 ;i =i+1){
             cursor = cursor->proximo;
         }
-        Nodo *proximo = cursor->proximo->proximo;
+        NodoEstudiante *proximo = cursor->proximo->proximo;
         free(cursor->proximo);
         cursor->proximo = proximo;
     }
 }
 
-void imprimirLista(Nodo *lista){
+void imprimirLista(NodoEstudiante *lista){
     if(lista == NULL){
         printf("La lista esta vacia\n");
     }else{
-        Nodo *cursor = lista;
+        NodoEstudiante *cursor = lista;
         while (cursor != NULL) {
             printf("%s (%d), ", cursor->estudiante.nombre, cursor->estudiante.edad);
             cursor = cursor->proximo;

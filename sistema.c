@@ -1,28 +1,102 @@
 #include "estructura_estudiantes.c"
+#include <string.h>
 
-
-Nodo *altaEstudiante(char *nombre, int edad, Nodo *lista){
-    Estudiante estudiante;
-    estudiante.nombre = nombre;
-    estudiante.edad = edad;
-    //Se agrega el alumno a la lista
-    lista = agregarElemento(lista, estudiante);
-    return lista;
+void darDeAlta(NodoEstudiante *lista, Estudiante estudianteActual){
+    printf("**************************************************\n");
+    printf("            ALTA DE ESTUDIANTES\n");
+    printf("\n");
+    printf("Ingrese el nombre del estudiante: ");
+   
+    char nombre[64];
+    fgets(nombre, sizeof(nombre), stdin);
+   /*
+    char *nombre;
+    scanf("%s[^\n]", &nombre);*/
+    printf("Ingrese edad: ");
+    int edad;
+    scanf("%d", &edad);
+    lista = altaEstudiante(nombre, edad, lista);
 }
 
-void iniciarSistema(Nodo *lista){
+void buscarEstudinte(NodoEstudiante *lista, Estudiante estudianteActual){}
+
+void buscarEstudianteEdad(NodoEstudiante *lista, Estudiante estudianteActual){}
+
+void iniciarSistema(NodoEstudiante *lista, Estudiante estudianteActual){
+    printf("**************************************************\n");
+    printf("     BIENVENIDO AL SISTEMA DE ESTUDIANTES\n");
+    printf("\n");
+    printf("1.Lista de estudiantes\n");
+    printf("2.Dar de alta estudiante\n");
+    printf("3.Buscar por nombre\n");
+    printf("4.Buscar por rango de edad\n");
+    printf("\n");
+    printf("0.Exit\n");
+    printf("*************************************************\n\n");
+    int opcion = 50;
+    scanf("%i", &opcion);
     
+    switch (opcion)
+    {
+    case 1:
+        imprimirLista(lista);
+        iniciarSistema(lista, estudianteActual);
+        break;
+
+    case 2:
+        darDeAlta(lista, estudianteActual);
+        iniciarSistema(lista, estudianteActual);
+        break;
+
+    case 3:
+        buscarEstudinte(lista, estudianteActual);
+        break;
+
+    case 4:
+        buscarEstudianteEdad(lista, estudianteActual);
+        break;
+    
+    case 0:
+        printf("Se sale");
+        break;
+
+    default:
+        printf("Seleccione una opcion valida\n\n");
+        iniciarSistema(lista, estudianteActual);
+        break;
+    }
 }
+
 
 int main() {
-    Nodo *lista;
-    lista = crearLista();
+    NodoEstudiante *lista = crearLista();
+    Estudiante estudianteActual;
     lista = altaEstudiante("Juan Roman Riquelme", 30, lista);
     lista = altaEstudiante("Carlos Saul Menem", 50, lista);
     lista = altaEstudiante("Leopoldo Garcia", 38, lista);
     lista = altaEstudiante("Marcos Galperin", 35, lista);
-    //imprimirLista(lista);
-    Nodo *lista2 = crearLista();
+
+    iniciarSistema(lista, estudianteActual);
+
+    /*
+    imprimirLista(lista);
+    NodoEstudiante *lista2 = crearLista();
     lista2 = obtenerEstudiantesPorEdad(lista, 30, 40);
     imprimirLista(lista2);
+
+    Materia analisis;
+    analisis.titulo = "Analisis 1";
+    analisis.aprobada = false;
+    analisis.cursando = true;
+   /*
+    Estudiante estudianteActual = obtenerEstudiante(lista, "Juan Roman Riquelme");
+    estudianteActual.materias = agregarMateria(estudianteActual.materias, analisis);
+    imprimirListaMaterias(estudianteActual.materias); 
+
+    /*
+    NodoMateria *listaMaterias = crearListaMaterias();
+    listaMaterias = agregarMateria(listaMaterias, analisis);
+    imprimirListaMaterias(listaMaterias);
+    */
+
 }

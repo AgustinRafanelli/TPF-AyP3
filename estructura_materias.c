@@ -3,26 +3,26 @@
 
 typedef enum {false, true} bool;
 
-typedef struct{
+typedef struct {
     char *titulo;
     int notaFinal;
     bool aprobada;
     bool cursando;
 } Materia;
 
-typedef struct estructuraNodo {
+typedef struct NodoMateria {
     Materia materia;
-    struct estructuraNodo *proximo;
-} Nodo;
+    struct NodoMateria *proximo;
+} NodoMateria;
 
-Nodo *agregarElemento(Nodo *lista, Materia materia) {
-    Nodo *nodoNuevo = malloc(sizeof(Nodo));
+NodoMateria *agregarMateria(NodoMateria *lista, Materia materia) {
+    NodoMateria *nodoNuevo = malloc(sizeof(NodoMateria));
     nodoNuevo->materia = materia;
     nodoNuevo->proximo = NULL;
     if (lista == NULL) {
         lista = nodoNuevo;
     } else {
-        Nodo *cursor = lista;
+        NodoMateria *cursor = lista;
         while (cursor->proximo != NULL) {
             cursor = cursor->proximo;
         }
@@ -31,18 +31,18 @@ Nodo *agregarElemento(Nodo *lista, Materia materia) {
     return lista;
 }
 
-Nodo *crearLista() {
-    Nodo *lista = malloc(sizeof(Nodo));
+NodoMateria *crearListaMaterias() {
+    NodoMateria *lista = malloc(sizeof(NodoMateria));
     lista = NULL;
     return lista;
 }
 
-int largoDeLista(Nodo *lista){
+int largoDeListaMaterias(NodoMateria *lista){
     if (lista == NULL) {
        return 0;
     } else {
         int contador = 0;
-        Nodo *cursor = lista;
+        NodoMateria *cursor = lista;
         while (cursor != NULL) {
             contador = contador+1;
             cursor = cursor->proximo;
@@ -52,25 +52,25 @@ int largoDeLista(Nodo *lista){
     return 0;
 }
 
-void eliminarNodo (Nodo *lista, int posicion){
-    if(lista == NULL || posicion >= largoDeLista(lista)){
+void eliminarNodoMaterias (NodoMateria *lista, int posicion){
+    if(lista == NULL || posicion >= largoDeListaMaterias(lista)){
         return;
     } else{
-        Nodo *cursor = lista;
+        NodoMateria *cursor = lista;
         for(int i = 0; i < posicion-1 ;i =i+1){
             cursor = cursor->proximo;
         }
-        Nodo *proximo = cursor->proximo->proximo;
+        NodoMateria *proximo = cursor->proximo->proximo;
         free(cursor->proximo);
         cursor->proximo = proximo;
     }
 }
 
-void imprimirLista(Nodo *lista){
+void imprimirListaMaterias(NodoMateria *lista){
     if(lista == NULL){
         printf("La lista esta vacia\n");
     }else{
-        Nodo *cursor = lista;
+        NodoMateria *cursor = lista;
         while (cursor != NULL) {
             printf("%s, ", cursor->materia.titulo);
             cursor = cursor->proximo;
