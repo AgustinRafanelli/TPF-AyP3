@@ -29,3 +29,11 @@ El trabajo se puede hacer de a dos personas o individualmente. En el caso de los
 Grabar un video de máximo 10 minutos (puede ser menos). En el caso de grupo de a dos, intenten participar los dos, pueden enviar dos videos de más o menos la misma duración (5 minutos máximo aproximadamente).
 
 Fecha de entrega: 2021-06-19
+
+
+Puntos extra:
+
+legajo secuencial
+desanotar materia
+correlatividades
+dar de baja alumno

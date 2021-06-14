@@ -1,26 +1,46 @@
-#include "estructura_estudiantes.c"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include "estructura_estudiantes.c"
+
 
 void darDeAlta(NodoEstudiante *lista, Estudiante estudianteActual){
     printf("**************************************************\n");
     printf("            ALTA DE ESTUDIANTES\n");
     printf("\n");
     printf("Ingrese el nombre del estudiante: ");
-   
+    
     char nombre[64];
-    fgets(nombre, sizeof(nombre), stdin);
-   /*
-    char *nombre;
-    scanf("%s[^\n]", &nombre);*/
+    scanf("%s[^\n]", &nombre);
+
     printf("Ingrese edad: ");
     int edad;
     scanf("%d", &edad);
     lista = altaEstudiante(nombre, edad, lista);
+
+    printf("\n Estudiante agregado con exito\n\n");
 }
 
-void buscarEstudinte(NodoEstudiante *lista, Estudiante estudianteActual){}
+void buscarEstudinte(NodoEstudiante *lista, Estudiante estudianteActual){
+    printf("Ingrese el nombre del estudiante: ");
+    char nombre[64];
+    scanf("%s[^\n]", nombre);
+    imprimirLista(obtenerEstudiante(lista, nombre));
 
-void buscarEstudianteEdad(NodoEstudiante *lista, Estudiante estudianteActual){}
+}
+
+void buscarEstudianteEdad(NodoEstudiante *lista, Estudiante estudianteActual){  
+
+    int min;
+    int max;
+    printf("Ingrese edad minima: ");
+    scanf("%i", min);
+    printf("Ingrese edad maxima: ");
+    scanf("%i", max);
+    printf("minima: %i\nmaxima: %i\n",min,max);
+    imprimirLista(obtenerEstudiantesPorEdad(lista, min, max));
+
+}
 
 void iniciarSistema(NodoEstudiante *lista, Estudiante estudianteActual){
     printf("**************************************************\n");
@@ -35,7 +55,7 @@ void iniciarSistema(NodoEstudiante *lista, Estudiante estudianteActual){
     printf("*************************************************\n\n");
     int opcion = 50;
     scanf("%i", &opcion);
-    
+
     switch (opcion)
     {
     case 1:
@@ -75,7 +95,11 @@ int main() {
     lista = altaEstudiante("Carlos Saul Menem", 50, lista);
     lista = altaEstudiante("Leopoldo Garcia", 38, lista);
     lista = altaEstudiante("Marcos Galperin", 35, lista);
-
+    imprimirLista(lista);
+/*
+    
+    imprimirLista(obtenerEstudiantesPorEdad(lista, min, max));
+    */
     iniciarSistema(lista, estudianteActual);
 
     /*

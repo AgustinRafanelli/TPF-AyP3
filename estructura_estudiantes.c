@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "estructura_materias.c"
 
 typedef struct estructuraEstudiante{
-    char *nombre;
+    char nombre[64];
     int legajo;
     int edad;
     NodoMateria *materias;
@@ -22,11 +23,13 @@ NodoEstudiante *agregarElemento(NodoEstudiante *lista, Estudiante estudiante) {
     nodoNuevo->proximo = NULL;
     if (lista == NULL) {
         lista = nodoNuevo;
+      //  nodoNuevo->estudiante.legajo = 1;
     } else {
         NodoEstudiante *cursor = lista;
         while (cursor->proximo != NULL) {
             cursor = cursor->proximo;
         }
+       // nodoNuevo->estudiante.legajo = cursor->estudiante.legajo+1;
         cursor->proximo = nodoNuevo;
     }
     return lista;
@@ -36,28 +39,32 @@ NodoEstudiante *agregarElementoPorEdad(NodoEstudiante *lista, Estudiante estudia
     NodoEstudiante *nodoNuevo = malloc(sizeof(NodoEstudiante));
     nodoNuevo->estudiante = estudiante;
     nodoNuevo->proximo = NULL;
+    printf("elemento\n");
     if (lista == NULL || lista->estudiante.edad > nodoNuevo->estudiante.edad) {
+        printf("primer elemento\n");
         nodoNuevo->proximo = lista;
         lista = nodoNuevo;
     } else {
         NodoEstudiante *cursor = lista;
         while (cursor->proximo != NULL && cursor->proximo->estudiante.edad < nodoNuevo->estudiante.edad) {
+            printf("while por edad\n");
             cursor = cursor->proximo;
         }
         if(cursor->proximo != NULL){
+            printf("ultimo elemento\n");
             nodoNuevo->proximo = cursor->proximo;
         }
         cursor->proximo = nodoNuevo;
     }
+    printf("return");
     return lista;
 }
 
 NodoEstudiante *altaEstudiante(char *nombre, int edad, NodoEstudiante *lista){
     Estudiante estudiante;
-    estudiante.nombre = nombre;
+    strcpy(estudiante.nombre, nombre);
     estudiante.edad = edad;
     estudiante.materias = crearListaMaterias();
-    //Se agrega el alumno a la lista
     lista = agregarElemento(lista, estudiante);
     return lista;
 }
@@ -83,31 +90,40 @@ int largoDeLista(NodoEstudiante *lista){
     return 0;
 }
 
-Estudiante obtenerEstudiante (NodoEstudiante *lista, char *nombre){
-    Estudiante estudianteObtenido;
+NodoEstudiante *obtenerEstudiante (NodoEstudiante *lista, char *nombre){
+    NodoEstudiante *listaNueva;
+    printf("%s", nombre);
     if(lista == NULL){
-        return estudianteObtenido;
+        
+        printf("lista null");
+        return listaNueva;
     } else{
         NodoEstudiante *cursor = lista;
-        while(cursor->proximo != NULL && cursor->estudiante.nombre != nombre){
+        while(cursor != NULL){
+            printf("while\n %s", cursor->estudiante.nombre);
+            if(cursor->estudiante.nombre == nombre){
+                printf("if");
+                listaNueva = agregarElemento(listaNueva, cursor->estudiante);
+            }
             cursor = cursor->proximo;
         }
-        if(cursor->estudiante.nombre == nombre){
-            estudianteObtenido = cursor->estudiante;
-        }
-        return estudianteObtenido;  
+        return listaNueva;  
     }
 }
 
 NodoEstudiante *obtenerEstudiantesPorEdad (NodoEstudiante *lista, int min, int max){
     NodoEstudiante *listaNueva;
     if(lista == NULL){
+        printf("null\n");
         return listaNueva;
     } else{
         NodoEstudiante *cursor = lista;
         while(cursor != NULL){
+            printf("while\n");
             if(cursor->estudiante.edad >= min && cursor->estudiante.edad <= max){
+                printf("if\n");
                 listaNueva = agregarElementoPorEdad(listaNueva, cursor->estudiante);
+                printf("otro if\n");
             }
             cursor = cursor->proximo;
         }
@@ -135,7 +151,7 @@ void imprimirLista(NodoEstudiante *lista){
     }else{
         NodoEstudiante *cursor = lista;
         while (cursor != NULL) {
-            printf("%s (%d), ", cursor->estudiante.nombre, cursor->estudiante.edad);
+            printf("%s (%d) Leg: %d, ", cursor->estudiante.nombre, cursor->estudiante.edad, cursor->estudiante.legajo);
             cursor = cursor->proximo;
         }
         printf("\n");
