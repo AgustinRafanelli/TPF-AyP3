@@ -17,6 +17,12 @@ typedef struct NodoMateria {
     struct NodoMateria *proximo;
 } NodoMateria;
 
+NodoMateria *crearListaMaterias() {
+    NodoMateria *lista = malloc(sizeof(NodoMateria));
+    lista = NULL;
+    return lista;
+}
+
 NodoMateria *agregarMateria(NodoMateria *lista, Materia materia) {
     NodoMateria *nodoNuevo = malloc(sizeof(NodoMateria));
     nodoNuevo->materia = materia;
@@ -51,9 +57,27 @@ NodoMateria *agregarNuevaMateria(NodoMateria *lista, Materia materia) {
     return lista;
 }
 
-NodoMateria *crearListaMaterias() {
-    NodoMateria *lista = malloc(sizeof(NodoMateria));
-    lista = NULL;
+bool verificarRepeticion(NodoMateria *lista, char *titulo){
+    if(lista == NULL){
+        return false;
+    } else{
+        NodoMateria *cursor = lista;
+        while(cursor != NULL){
+            if(strcmp(cursor->materia.titulo, titulo) == 0){
+                return true;
+            }
+            cursor = cursor->proximo;
+        }
+        return false;
+    }
+}
+
+NodoMateria *altaMateria(char *titulo, NodoMateria *lista){
+    if(verificarRepeticion(lista, titulo) == false){
+        Materia materia;
+        materia.titulo = titulo;
+        lista = agregarNuevaMateria(lista, materia);
+    } 
     return lista;
 }
 

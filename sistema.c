@@ -118,8 +118,9 @@ int main() {
     lista = altaEstudiante("Carlos Saul Menem", 50, lista);
     lista = altaEstudiante("Leopoldo Garcia", 38, lista);
     lista = altaEstudiante("Marcos Galperin", 35, lista);
-
     NodoMateria *listaDeMaterias = crearListaMaterias();
-    listaDeMaterias = altaMateria(listaDeMaterias, "Analisis I");
+    listaDeMaterias = altaMateria("Analisis I", listaDeMaterias);
+    listaDeMaterias = altaMateria("Algebra I", listaDeMaterias);
+    listaDeMaterias = altaMateria("Algoritmos y Programacion I", listaDeMaterias);
     iniciarSistema(lista);
 }
