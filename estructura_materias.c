@@ -7,6 +7,7 @@ typedef enum {false, true} bool;
 typedef struct {
     char *titulo;
     int notaFinal;
+    int codigo;
     bool aprobada;
     bool cursando;
 } Materia;
@@ -27,6 +28,24 @@ NodoMateria *agregarMateria(NodoMateria *lista, Materia materia) {
         while (cursor->proximo != NULL) {
             cursor = cursor->proximo;
         }
+        cursor->proximo = nodoNuevo;
+    }
+    return lista;
+}
+
+NodoMateria *agregarNuevaMateria(NodoMateria *lista, Materia materia) {
+    NodoMateria *nodoNuevo = malloc(sizeof(NodoMateria));
+    nodoNuevo->materia = materia;
+    nodoNuevo->proximo = NULL;
+    if (lista == NULL) {
+        lista = nodoNuevo;
+        nodoNuevo->materia.codigo = 1;
+    } else {
+        NodoMateria *cursor = lista;
+        while (cursor->proximo != NULL) {
+            cursor = cursor->proximo;
+        }
+        nodoNuevo->materia.codigo = cursor->materia.codigo+1;
         cursor->proximo = nodoNuevo;
     }
     return lista;
