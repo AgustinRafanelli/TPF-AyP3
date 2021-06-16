@@ -28,11 +28,17 @@ void darDeAltaMateria(NodoMateria *lista){
     printf("            ALTA DE MATERIAS\n");
     printf("\n");
     printf("Ingrese el titulo de la materia: ");
-    
     char titulo[64];
     scanf("%[^\n]", &titulo);
     fflush(stdin);
-    lista = altaMateria(titulo, lista, 0, 0);
+    int correlativa1, correlativa2;
+    printf("Ingrese correlativa N 1 (0 si no tiene): ");
+    scanf("%i", &correlativa1);
+    fflush(stdin);
+    printf("Ingrese correlativa N 2 (0 si no tiene): ");
+    scanf("%i", &correlativa2);
+    fflush(stdin);
+    lista = altaMateria(titulo, lista, correlativa1, correlativa2);
     printf("\n Materia dada de alta exitosamente\n\n");
 }
 
@@ -91,8 +97,10 @@ NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMat
 
         case 2:
             materia = seleccionarMateria(estudiante->estudiante, listaMaterias);
-            estudiante->estudiante.materias = agregarMateria(estudiante->estudiante.materias, materia);
-            printf("Inscripto con exito a la materia: %s\n", materia.titulo);
+            if(verificarCorrelativas(materia, estudiante->estudiante.materias) == true){
+                estudiante->estudiante.materias = agregarMateria(estudiante->estudiante.materias, materia);
+                printf("Inscripto con exito a la materia: %s\n", materia.titulo);
+            }else printf("No se pudo inscribir a la materia (no cumple con las correlativas)\n");
             modificarEstudiante(lista, listaMaterias, legajo);
             break;
 
@@ -275,9 +283,6 @@ int main() {
     listaMaterias = altaMateria("Analisis I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algebra I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias, 0, 0);
-    //imprimirListaMaterias(listaMaterias);
+    //listaMaterias = altaMateria("Analisis II", listaMaterias, 1, 2);
     iniciarSistema(lista, listaMaterias);
-    //imprimirMateriasDelAlumno(listaMaterias);
-    //listaMaterias->materia.notaFinal = 5;
-    //imprimirMateriasDelAlumno(listaMaterias);
 }

@@ -73,6 +73,24 @@ bool verificarRepeticion(NodoMateria *lista, char *titulo){
     }
 }
 
+bool verificarCorrelativas(Materia materia, NodoMateria *listaDelAlumno){
+    bool cumple = false;
+    if(listaDelAlumno == NULL && materia.correlativas[0] == 0 && materia.correlativas[1] == 0){
+        return true;
+    } else{
+        NodoMateria *cursor = listaDelAlumno;
+        while(cursor != NULL){
+            for(int i = 0; i < 2; i++){
+                if(materia.correlativas[i] == cursor->materia.codigo || materia.correlativas[i] == 0){
+                    cumple = true;
+                }else cumple = false;
+            }
+            cursor = cursor->proximo;
+        }
+        return cumple;
+    }
+}
+
 NodoMateria *altaMateria(char *titulo, NodoMateria *lista, int correlativa1, int correlativa2){
     if(verificarRepeticion(lista, titulo) == false){
         Materia materia;
