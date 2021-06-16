@@ -22,10 +22,41 @@ void darDeAlta(NodoEstudiante *lista){
 
     printf("\n Estudiante agregado con exito\n\n");
 }
-void modificarEstudiante(Estudiante estudiante){
+void modificarEstudiante(Estudiante estudiante, NodoMateria *listaMaterias){
+        printf("**************************************************\n");
+    printf("            MODIFICACION DE ESTUDIANTE\n");
+    printf("            %s (%i)\n", estudiante.nombre, estudiante.edad);
+    printf("\n");
+    printf("1.Lista de Materias\n");
+    printf("2.Anotarse en una materia\n");
+    printf("3.Rendir en una materia\n");
+    int opcion;
+    scanf("%i", &opcion);
+    fflush(stdin);
+    switch (opcion)
+    {
+        case 1:
+            imprimirListaMaterias(estudiante.materias);
+            modificarEstudiante(estudiante, listaMaterias);
+            break;
 
+        case 2:
+            // Falta obtener la materia deseada, le estoy asignando arbitrariamente la primera para probar
+            estudiante.materias = agregarMateria(estudiante.materias, listaMaterias->materia);
+            modificarEstudiante(estudiante, listaMaterias);
+            break;
+
+        /*case 3:
+            modificarEstudiante(estudiante, listaMaterias);
+            break;*/
+
+        default:
+            printf("Seleccione una opcion valida\n\n");
+            modificarEstudiante(estudiante, listaMaterias);
+            break;
+    }
 }
-void seleccionarEstudiante(NodoEstudiante *lista){
+void seleccionarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
     int legajo;
     printf("Ingrese legajo: ");
     scanf("%i", &legajo);
@@ -34,21 +65,21 @@ void seleccionarEstudiante(NodoEstudiante *lista){
     Estudiante estudiante = obtenerEstudianteActual(lista, legajo);
     if(estudiante.legajo != legajo){
         printf("Legajo no encontrado\n");
-        seleccionarEstudiante(lista);
-    }else modificarEstudiante(estudiante);
+        seleccionarEstudiante(lista, listaMaterias);
+    }else modificarEstudiante(estudiante, listaMaterias);
 }
 
-void buscarEstudinte(NodoEstudiante *lista){
+void buscarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("Ingrese el nombre del estudiante: ");
     char nombre[64];
     scanf("%[^\n]", nombre);
     fflush(stdin);
     NodoEstudiante *listaObtenida = obtenerEstudiante(lista, nombre);
     imprimirLista(listaObtenida);
-    seleccionarEstudiante(listaObtenida);
+    seleccionarEstudiante(listaObtenida, listaMaterias);
 }
 
-void buscarEstudianteEdad(NodoEstudiante *lista){
+void buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMaterias){
     int min;
     int max;
     printf("Ingrese edad minima: ");
@@ -59,11 +90,11 @@ void buscarEstudianteEdad(NodoEstudiante *lista){
     fflush(stdin);
     NodoEstudiante *listaObtenida = obtenerEstudiantesPorEdad(lista, min, max);
     imprimirLista(listaObtenida);
-    seleccionarEstudiante(listaObtenida);
+    seleccionarEstudiante(listaObtenida, listaMaterias);
 
 }
 
-void iniciarSistema(NodoEstudiante *lista){
+void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("**************************************************\n");
     printf("     BIENVENIDO AL SISTEMA DE ESTUDIANTES\n");
     printf("\n");
@@ -74,7 +105,7 @@ void iniciarSistema(NodoEstudiante *lista){
     printf("\n");
     printf("0.Exit\n");
     printf("*************************************************\n\n");
-    int opcion = 50;
+    int opcion;
     scanf("%i", &opcion);
     fflush(stdin);
 
@@ -82,22 +113,22 @@ void iniciarSistema(NodoEstudiante *lista){
     {
     case 1:
         imprimirLista(lista);
-        iniciarSistema(lista);
+        iniciarSistema(lista, listaMaterias);
         break;
 
     case 2:
         darDeAlta(lista);
-        iniciarSistema(lista);
+        iniciarSistema(lista, listaMaterias);
         break;
 
     case 3:
-        buscarEstudinte(lista);
-        iniciarSistema(lista);
+        buscarEstudiante(lista, listaMaterias);
+        iniciarSistema(lista, listaMaterias);
         break;
 
     case 4:
-        buscarEstudianteEdad(lista);
-        iniciarSistema(lista);
+        buscarEstudianteEdad(lista, listaMaterias);
+        iniciarSistema(lista, listaMaterias);
         break;
     
     case 0:
@@ -106,7 +137,7 @@ void iniciarSistema(NodoEstudiante *lista){
 
     default:
         printf("Seleccione una opcion valida\n\n");
-        iniciarSistema(lista);
+        iniciarSistema(lista, listaMaterias);
         break;
     }
 }
@@ -118,9 +149,9 @@ int main() {
     lista = altaEstudiante("Carlos Saul Menem", 50, lista);
     lista = altaEstudiante("Leopoldo Garcia", 38, lista);
     lista = altaEstudiante("Marcos Galperin", 35, lista);
-    NodoMateria *listaDeMaterias = crearListaMaterias();
-    listaDeMaterias = altaMateria("Analisis I", listaDeMaterias);
-    listaDeMaterias = altaMateria("Algebra I", listaDeMaterias);
-    listaDeMaterias = altaMateria("Algoritmos y Programacion I", listaDeMaterias);
-    iniciarSistema(lista);
+    NodoMateria *listaMaterias = crearListaMaterias();
+    listaMaterias = altaMateria("Analisis I", listaMaterias);
+    listaMaterias = altaMateria("Algebra I", listaMaterias);
+    listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias);
+    iniciarSistema(lista, listaMaterias);
 }
