@@ -5,7 +5,7 @@
 #include "estructura_estudiantes.c"
 
 
-void darDeAlta(NodoEstudiante *lista){
+void darDeAltaEstudiante(NodoEstudiante *lista){
     printf("**************************************************\n");
     printf("            ALTA DE ESTUDIANTES\n");
     printf("\n");
@@ -22,64 +22,123 @@ void darDeAlta(NodoEstudiante *lista){
 
     printf("\n Estudiante agregado con exito\n\n");
 }
-void modificarEstudiante(Estudiante estudiante, NodoMateria *listaMaterias){
-        printf("**************************************************\n");
+
+void darDeAltaMateria(NodoMateria *lista){
+    printf("**************************************************\n");
+    printf("            ALTA DE MATERIAS\n");
+    printf("\n");
+    printf("Ingrese el titulo de la materia: ");
+    
+    char titulo[64];
+    scanf("%[^\n]", &titulo);
+    fflush(stdin);
+    lista = altaMateria(titulo, lista);
+
+    printf("\n Materia dada de alta exitosamente\n\n");
+}
+
+Materia seleccionarMateria(Estudiante estudiante, NodoMateria *listaMaterias){
+    Materia materia;
+    int codigo;
+    while(materia.codigo != codigo){
+        printf("Ingrese el codigo de la materia: ");
+        scanf("%i", &codigo);
+        printf("\n");
+        fflush(stdin);
+        materia = obtenerMateria(listaMaterias, codigo);
+        if(materia.codigo != codigo){
+            printf("Materia no encontrada\n");
+        }
+    }
+    return materia;
+}
+
+NodoMateria *rendirMateria(int codigo, NodoMateria *listaMaterias){
+    int nota = 0;
+    while(nota < 1 || nota > 10){
+        printf("Ingrese la nota obtenida: ");
+        scanf("%d", &nota);
+        printf("\n");
+        fflush(stdin);
+        if(nota < 1 || nota > 10){
+            printf("Solo se permiten notas del 1 al 10\n");
+        }
+    }
+    listaMaterias = rendir(listaMaterias, codigo, nota);
+    printf("Nota registrada con exito\n");
+    return listaMaterias;
+}
+
+NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias, int legajo){
+    NodoEstudiante *estudiante = modificarEstudianteActual(lista, legajo);
+    printf("**************************************************\n");
     printf("            MODIFICACION DE ESTUDIANTE\n");
-    printf("            %s (%i)\n", estudiante.nombre, estudiante.edad);
+    printf("            %s (%i)\n", estudiante->estudiante.nombre, estudiante->estudiante.edad);
     printf("\n");
     printf("1.Lista de Materias\n");
     printf("2.Anotarse en una materia\n");
-    printf("3.Rendir en una materia\n");
+    printf("3.Rendir una materia\n");
+    printf("4 Volver al menu principal\n");
     int opcion;
     scanf("%i", &opcion);
     fflush(stdin);
+    Materia materia;
     switch (opcion)
     {
         case 1:
-            imprimirListaMaterias(estudiante.materias);
-            modificarEstudiante(estudiante, listaMaterias);
+            imprimirMateriasDelAlumno(estudiante->estudiante.materias);
+            modificarEstudiante(lista, listaMaterias, legajo);
             break;
 
         case 2:
-            // Falta obtener la materia deseada, le estoy asignando arbitrariamente la primera para probar
-            estudiante.materias = agregarMateria(estudiante.materias, listaMaterias->materia);
-            modificarEstudiante(estudiante, listaMaterias);
+            materia = seleccionarMateria(estudiante->estudiante, listaMaterias);
+            estudiante->estudiante.materias = agregarMateria(estudiante->estudiante.materias, materia);
+            printf("Inscripto con exito a la materia: %s\n", materia.titulo);
+            modificarEstudiante(lista, listaMaterias, legajo);
             break;
 
-        /*case 3:
-            modificarEstudiante(estudiante, listaMaterias);
-            break;*/
+        case 3:
+            materia = seleccionarMateria(estudiante->estudiante, estudiante->estudiante.materias);
+            estudiante->estudiante.materias = rendirMateria(materia.codigo, estudiante->estudiante.materias);
+            modificarEstudiante(lista, listaMaterias, legajo);
+            break;
+
+        case 4:
+            return estudiante;
+            break;
 
         default:
             printf("Seleccione una opcion valida\n\n");
-            modificarEstudiante(estudiante, listaMaterias);
+            modificarEstudiante(lista, listaMaterias, legajo);
             break;
     }
 }
-void seleccionarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
+
+NodoEstudiante *seleccionarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
     int legajo;
     printf("Ingrese legajo: ");
     scanf("%i", &legajo);
     printf("\n");
     fflush(stdin);
-    Estudiante estudiante = obtenerEstudianteActual(lista, legajo);
-    if(estudiante.legajo != legajo){
+    if(verificarEstudiante(lista, legajo) == false){
         printf("Legajo no encontrado\n");
         seleccionarEstudiante(lista, listaMaterias);
-    }else modificarEstudiante(estudiante, listaMaterias);
+    }else{
+        return modificarEstudiante(lista, listaMaterias, legajo);
+    }
 }
 
-void buscarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
+NodoEstudiante *buscarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("Ingrese el nombre del estudiante: ");
     char nombre[64];
     scanf("%[^\n]", nombre);
     fflush(stdin);
     NodoEstudiante *listaObtenida = obtenerEstudiante(lista, nombre);
     imprimirLista(listaObtenida);
-    seleccionarEstudiante(listaObtenida, listaMaterias);
+    return seleccionarEstudiante(listaObtenida, listaMaterias);
 }
 
-void buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMaterias){
+NodoEstudiante *buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMaterias){
     int min;
     int max;
     printf("Ingrese edad minima: ");
@@ -90,55 +149,119 @@ void buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMaterias){
     fflush(stdin);
     NodoEstudiante *listaObtenida = obtenerEstudiantesPorEdad(lista, min, max);
     imprimirLista(listaObtenida);
-    seleccionarEstudiante(listaObtenida, listaMaterias);
+    return seleccionarEstudiante(listaObtenida, listaMaterias);
 
 }
 
-void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
+NodoEstudiante *modificarEstudiantes(NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("**************************************************\n");
-    printf("     BIENVENIDO AL SISTEMA DE ESTUDIANTES\n");
+    printf("             MODIFICACION DE ESTUDIANTES          \n");
     printf("\n");
     printf("1.Lista de estudiantes\n");
     printf("2.Dar de alta estudiante\n");
     printf("3.Buscar por nombre\n");
     printf("4.Buscar por rango de edad\n");
     printf("\n");
+    printf("0.Volver al menu principal\n");
+    printf("*************************************************\n\n");
+    int opcion;
+    scanf("%i", &opcion);
+    fflush(stdin);
+    switch (opcion){
+        case 1:
+            imprimirLista(lista);
+            modificarEstudiantes(lista, listaMaterias);
+            break;
+
+        case 2:
+            darDeAltaEstudiante(lista);
+            modificarEstudiantes(lista, listaMaterias);
+            break;
+
+        case 3:
+            lista = buscarEstudiante(lista, listaMaterias);
+            modificarEstudiantes(lista, listaMaterias);
+            break;
+
+        case 4:
+            lista = buscarEstudianteEdad(lista, listaMaterias);
+            modificarEstudiantes(lista, listaMaterias);
+            break;
+        
+        case 0:
+            return lista;
+            break;
+
+        default:
+            printf("Seleccione una opcion valida\n\n");
+            modificarEstudiantes(lista, listaMaterias);
+            break;
+    }
+}
+
+void modificarMaterias(NodoMateria *listaMaterias){
+    printf("**************************************************\n");
+    printf("             MODIFICACION DE MATERIAS          \n");
+    printf("\n");
+    printf("1.Lista de materias\n");
+    printf("2.Dar de alta materia\n");
+    printf("\n");
+    printf("0.Volver al menu principal\n");
+    printf("*************************************************\n\n");
+    int opcion;
+    scanf("%i", &opcion);
+    fflush(stdin);
+    switch (opcion){
+        case 1:
+            imprimirListaMaterias(listaMaterias);
+            modificarMaterias(listaMaterias);
+            break;
+
+        case 2:
+            darDeAltaMateria(listaMaterias);
+            modificarMaterias(listaMaterias);
+            break;
+        
+        case 0:
+            break;
+
+        default:
+            printf("Seleccione una opcion valida\n\n");
+            modificarMaterias(listaMaterias);
+            break;
+    }    
+}
+
+void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
+    printf("**************************************************\n");
+    printf("     BIENVENIDO AL SISTEMA DE ESTUDIANTES\n");
+    printf("\n");
+    printf("1.Modificar estudiantes\n");
+    printf("2.Modificar materias\n");
+    printf("\n");
     printf("0.Exit\n");
     printf("*************************************************\n\n");
     int opcion;
     scanf("%i", &opcion);
     fflush(stdin);
+    switch(opcion){
+        case 1:
+            lista = modificarEstudiantes(lista, listaMaterias);
+            iniciarSistema(lista, listaMaterias);
+            break;
 
-    switch (opcion)
-    {
-    case 1:
-        imprimirLista(lista);
-        iniciarSistema(lista, listaMaterias);
-        break;
+        case 2:
+            modificarMaterias(listaMaterias);
+            iniciarSistema(lista, listaMaterias);
+            break;
 
-    case 2:
-        darDeAlta(lista);
-        iniciarSistema(lista, listaMaterias);
-        break;
+        case 0:
+            break;
 
-    case 3:
-        buscarEstudiante(lista, listaMaterias);
-        iniciarSistema(lista, listaMaterias);
-        break;
-
-    case 4:
-        buscarEstudianteEdad(lista, listaMaterias);
-        iniciarSistema(lista, listaMaterias);
-        break;
-    
-    case 0:
-        printf("Se sale");
-        break;
-
-    default:
-        printf("Seleccione una opcion valida\n\n");
-        iniciarSistema(lista, listaMaterias);
-        break;
+        default:
+            printf("Seleccione una opcion valida\n\n");
+            iniciarSistema(lista, listaMaterias);
+            break;
     }
 }
 
@@ -153,5 +276,9 @@ int main() {
     listaMaterias = altaMateria("Analisis I", listaMaterias);
     listaMaterias = altaMateria("Algebra I", listaMaterias);
     listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias);
+    //imprimirListaMaterias(listaMaterias);
     iniciarSistema(lista, listaMaterias);
+    //imprimirMateriasDelAlumno(listaMaterias);
+    //listaMaterias->materia.notaFinal = 5;
+    //imprimirMateriasDelAlumno(listaMaterias);
 }

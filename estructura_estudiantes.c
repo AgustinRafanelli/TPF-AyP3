@@ -100,21 +100,33 @@ int largoDeLista(NodoEstudiante *lista){
     }
     return 0;
 }
-Estudiante obtenerEstudianteActual(NodoEstudiante *lista, int legajo){
-    Estudiante estudiante;
+bool verificarEstudiante(NodoEstudiante *lista, int legajo){
     if (lista == NULL) {
-       return estudiante;
+       return false;
     } else {
         NodoEstudiante *cursor = lista;
         while (cursor->proximo != NULL && cursor->estudiante.legajo != legajo) {
             cursor = cursor->proximo;
         }
         if(cursor->estudiante.legajo == legajo){
-            estudiante = cursor->estudiante;
+            return true;
         }
-        return estudiante;
+        return false;
     }
+}
 
+NodoEstudiante *modificarEstudianteActual(NodoEstudiante *lista, int legajo){
+    if (lista == NULL) {
+       return lista;
+    } else {
+        NodoEstudiante *cursor = lista;
+        while (cursor->proximo != NULL && cursor->estudiante.legajo != legajo) {
+            cursor = cursor->proximo;
+        }
+        if(cursor->estudiante.legajo == legajo){
+            return cursor;
+        }
+    }
 }
 
 NodoEstudiante *obtenerEstudiante (NodoEstudiante *lista, char *nombre){
