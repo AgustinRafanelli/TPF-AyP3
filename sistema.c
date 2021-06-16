@@ -32,8 +32,7 @@ void darDeAltaMateria(NodoMateria *lista){
     char titulo[64];
     scanf("%[^\n]", &titulo);
     fflush(stdin);
-    lista = altaMateria(titulo, lista);
-
+    lista = altaMateria(titulo, lista, 0, 0);
     printf("\n Materia dada de alta exitosamente\n\n");
 }
 
@@ -273,9 +272,9 @@ int main() {
     lista = altaEstudiante("Leopoldo Garcia", 38, lista);
     lista = altaEstudiante("Marcos Galperin", 35, lista);
     NodoMateria *listaMaterias = crearListaMaterias();
-    listaMaterias = altaMateria("Analisis I", listaMaterias);
-    listaMaterias = altaMateria("Algebra I", listaMaterias);
-    listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias);
+    listaMaterias = altaMateria("Analisis I", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Algebra I", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias, 0, 0);
     //imprimirListaMaterias(listaMaterias);
     iniciarSistema(lista, listaMaterias);
     //imprimirMateriasDelAlumno(listaMaterias);

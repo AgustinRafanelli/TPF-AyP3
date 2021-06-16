@@ -10,6 +10,7 @@ typedef struct {
     int codigo;
     bool aprobada;
     bool cursando;
+    int correlativas[2];
 } Materia;
 
 typedef struct NodoMateria {
@@ -72,13 +73,15 @@ bool verificarRepeticion(NodoMateria *lista, char *titulo){
     }
 }
 
-NodoMateria *altaMateria(char *titulo, NodoMateria *lista){
+NodoMateria *altaMateria(char *titulo, NodoMateria *lista, int correlativa1, int correlativa2){
     if(verificarRepeticion(lista, titulo) == false){
         Materia materia;
         strcpy(materia.titulo, titulo);
         materia.aprobada = false;
         materia.cursando = true;
         materia.notaFinal = NULL;
+        materia.correlativas[0] = correlativa1;
+        materia.correlativas[1] = correlativa2;
         lista = agregarNuevaMateria(lista, materia);
     }
     return lista;
