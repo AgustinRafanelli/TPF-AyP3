@@ -159,14 +159,11 @@ void eliminarMateria (NodoMateria *lista, int codigo){
     if(lista == NULL){
         return;
     } else if(cursor->materia.codigo == codigo){
-        printf("else if");
         proximo = cursor->proximo;
         free(cursor);
         cursor = proximo;
     }else{
-        printf("else");
         while (cursor->proximo != NULL && cursor->proximo->materia.codigo != codigo) {
-            printf("while");
             cursor = cursor->proximo;
         }
         if(cursor->proximo->proximo == NULL && cursor->proximo->materia.codigo == codigo){
@@ -187,10 +184,31 @@ void imprimirListaMaterias(NodoMateria *lista){
     }else{
         NodoMateria *cursor = lista;
         int contador = 0;
-        printf("    Titulo      Codigo\n");
+        printf("\n    Titulo                                 Codigo\n\n");
         while (cursor != NULL) {
             contador = contador + 1;
-            printf("%i.  %s   %d\n", contador, cursor->materia.titulo, cursor->materia.codigo);
+            if(strlen(cursor->materia.titulo) == 10){
+                printf("%i.  %s                               %d\n", contador, cursor->materia.titulo, cursor->materia.codigo);
+            }else if(strlen(cursor->materia.titulo) >= 27){
+                printf("%i.  %s", contador, cursor->materia.titulo);
+                for(int i=27-(strlen(cursor->materia.titulo)-27); i>13; i--){
+                    printf(" ");
+                }
+                printf("%d\n", cursor->materia.codigo);
+            }else if(strlen(cursor->materia.titulo) < 10){
+                printf("%i.  %s                               ", contador, cursor->materia.titulo);
+                for(int i=strlen(cursor->materia.titulo); i<10; i++){
+                    printf(" ");
+                }
+                printf("%d\n", cursor->materia.codigo);
+            }else{
+                printf("%i.  %s", contador, cursor->materia.titulo);
+                for(int i=strlen(cursor->materia.titulo); i<41; i++){
+                    printf(" ");
+                }
+                printf("%d\n", cursor->materia.codigo);
+            }
+            
             cursor = cursor->proximo;
         }
         printf("\n");
@@ -203,15 +221,28 @@ void imprimirMateriasDelAlumno(NodoMateria *lista){
     }else{
         NodoMateria *cursor = lista;
         int contador = 0;
-        printf("    Titulo   Nota   Codigo  Cursando  Aprobada  Correlativa de\n");
+        printf("\n       Titulo                      Nota   Codigo  Cursando  Aprobada  Correlativa de\n\n");
         while (cursor != NULL) {
             contador = contador + 1;
             char *aprobada;
             char *cursando;
             if(cursor->materia.aprobada == false){aprobada = "No";} else{ aprobada = "Si";}
             if(cursor->materia.cursando == false){cursando = "No";} else{ cursando = "Si";}
-            printf("%d",cursor->materia.notaFinal);
-            printf("%i.  %s  %d    %d   %s    %s   %i y %i\n", contador, cursor->materia.titulo, cursor->materia.notaFinal, cursor->materia.codigo, cursando, aprobada,  cursor->materia.correlativas[0], cursor->materia.correlativas[1]);
+            if(strlen(cursor->materia.titulo) == 10){
+                printf("%i.  %s                     %d       %d        %s        %s          %i y %i\n", contador, cursor->materia.titulo, cursor->materia.notaFinal, cursor->materia.codigo, cursando, aprobada,  cursor->materia.correlativas[0], cursor->materia.correlativas[1]);
+            }else if(strlen(cursor->materia.titulo) >= 27){
+                printf("%i.  %s", contador, cursor->materia.titulo);
+                for(int i=27-(strlen(cursor->materia.titulo)-27); i>23; i--){
+                    printf(" ");
+                }
+                printf("%d       %d        %s        %s          %i y %i\n", cursor->materia.notaFinal, cursor->materia.codigo, cursando, aprobada,  cursor->materia.correlativas[0], cursor->materia.correlativas[1]);
+            }else if(strlen(cursor->materia.titulo) < 10){
+                printf("%i.  %s                     ", contador, cursor->materia.titulo);
+                for(int i=strlen(cursor->materia.titulo); i<10; i++){
+                    printf(" ");
+                }
+                printf("%d       %d        %s        %s          %i y %i\n", cursor->materia.notaFinal, cursor->materia.codigo, cursando, aprobada,  cursor->materia.correlativas[0], cursor->materia.correlativas[1]);
+            }
             cursor = cursor->proximo;
         }
         printf("\n");

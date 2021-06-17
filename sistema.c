@@ -4,7 +4,6 @@
 #include <conio.h>
 #include "estructura_estudiantes.c"
 
-//Random String
 char *randstring(size_t length) {
 
     static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";    
@@ -44,13 +43,13 @@ void darDeBajaEstudiante(NodoEstudiante *lista){
     Estudiante estudiante;
     int legajo;
     while(estudiante.legajo != legajo){
-        printf("Ingrese el codigo de la materia que desea borrar: ");
+        printf("Ingrese el legajo del estudiante que quiere borrar: ");
         scanf("%i", &legajo);
         printf("\n");
         fflush(stdin);
         estudiante = obtenerEstudianteLegajo(lista, legajo);
         if(estudiante.legajo != legajo){
-            printf("Materia no encontrada\n");
+            printf("Estudiante no encontrado\n");
         }
     }
     printf("Seguro que desea borrar a %s? (Y/N) ", estudiante.nombre);
@@ -368,9 +367,9 @@ void adicionDePruebas (NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("               ADICION DE PRUEBAS          \n");
     printf("\n");
     printf("1.Aniadir estudiantes\n");
-    printf("1.Imprimir estudiantes\n");
+    printf("2.Imprimir estudiantes\n");
     printf("3.Aniadir materias\n");
-    printf("3.Imprimir materias\n");
+    printf("4.Imprimir materias\n");
     printf("\n");
     printf("0.Volver al menu principal\n");
     printf("*************************************************\n\n");
@@ -453,14 +452,19 @@ int main() {
     lista = altaEstudiante("Carlos Saul Menem", 50, lista);
     lista = altaEstudiante("Leopoldo Garcia", 38, lista);
     lista = altaEstudiante("Marcos Galperin", 35, lista);
+    lista = altaEstudiante("Juan Ramon Roman Cesc", 35, lista);
     NodoMateria *listaMaterias = crearListaMaterias();
     listaMaterias = altaMateria("Analisis I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algebra I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Analisis II", listaMaterias, 1, 2);
-    //eliminarEstudiante(lista,1);
-    //eliminarMateria(listaMaterias,1);
-    iniciarSistema(lista, listaMaterias);
-    //imprimirMateriasDelAlumno(listaMaterias);
+    listaMaterias = altaMateria("Analisis III", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Algoritmos y Programacion II", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Algoritmos y Programacion III", listaMaterias, 0, 0);
+    //printf("%i", strlen(listaMaterias->materia.titulo));
+    //imprimirListaMaterias(listaMaterias);
+    imprimirMateriasDelAlumno(listaMaterias);
+    //printf("%i\n", strlen(lista->proximo->estudiante.nombre));
     //imprimirLista(lista);
+    //iniciarSistema(lista, listaMaterias);
 }

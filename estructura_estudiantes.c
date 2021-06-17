@@ -182,14 +182,11 @@ void eliminarEstudiante (NodoEstudiante *lista, int legajo){
     if(lista == NULL){
         return;
     }else if(cursor->estudiante.legajo == legajo){
-        printf("else if");
         proximo = cursor->proximo;
         free(cursor);
         cursor = proximo;
     }else{
-        printf("else");
         while (cursor->proximo != NULL && cursor->proximo->estudiante.legajo != legajo) {
-            printf("while");
             cursor = cursor->proximo;
         }
         if(cursor->proximo->proximo == NULL && cursor->proximo->estudiante.legajo == legajo){
@@ -210,10 +207,24 @@ void imprimirLista(NodoEstudiante *lista){
     }else{
         NodoEstudiante *cursor = lista;
         int contador = 0;
-        printf("    Nombre y Apellido      Edad  Legajo\n");
+        printf("\n    Nombre y Apellido      Edad  Legajo\n\n");
         while (cursor != NULL) {
             contador = contador + 1;
-            printf("%i.  %s   %d     %d\n", contador, cursor->estudiante.nombre, cursor->estudiante.edad, cursor->estudiante.legajo);
+            if(strlen(cursor->estudiante.nombre) == 19){
+                printf("%i.  %s     %d     %d\n", contador, cursor->estudiante.nombre, cursor->estudiante.edad, cursor->estudiante.legajo);
+            }else if(strlen(cursor->estudiante.nombre) < 19){
+                printf("%i.  %s     ", contador, cursor->estudiante.nombre);
+                for(int i=strlen(cursor->estudiante.nombre); i<19; i++){
+                    printf(" ");
+                }
+                printf("%d     %d\n", cursor->estudiante.edad, cursor->estudiante.legajo);
+            }else{
+                printf("%i.  %s", contador, cursor->estudiante.nombre);
+                for(int i=strlen(cursor->estudiante.nombre); i>=19; i--){
+                    printf(" ");
+                }
+                printf("%d     %d\n", cursor->estudiante.edad, cursor->estudiante.legajo);
+            }
             cursor = cursor->proximo;
         }
         printf("\n");
