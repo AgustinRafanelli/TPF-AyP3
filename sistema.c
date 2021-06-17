@@ -92,7 +92,7 @@ void darDeAltaMateria(NodoMateria *lista){
 void darDeBajaMateria(NodoMateria *lista){
     Materia materia;
     int codigo;
-    while(materia.codigo != codigo){
+    do{
         printf("Ingrese el codigo de la materia que desea borrar: ");
         scanf("%i", &codigo);
         printf("\n");
@@ -101,7 +101,7 @@ void darDeBajaMateria(NodoMateria *lista){
         if(materia.codigo != codigo){
             printf("Materia no encontrada\n");
         }
-    }
+    }while((materia.codigo != codigo));
     printf("Seguro que desea borrar %s? (Y/N) ", materia.titulo);
     char opcion;
     scanf("%s", &opcion);
