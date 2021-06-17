@@ -120,6 +120,7 @@ void darDeBajaMateria(NodoMateria *lista){
             break;
     }
 }
+
 Materia seleccionarMateria(Estudiante estudiante, NodoMateria *listaMaterias){
     Materia materia;
     int codigo;
@@ -161,7 +162,8 @@ NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMat
     printf("1.Lista de Materias\n");
     printf("2.Anotarse en una materia\n");
     printf("3.Rendir una materia\n");
-    printf("4 Volver al menu principal\n");
+    printf("4.Abandonar una materia\n");
+    printf("5.Volver al menu principal\n");
     int opcion;
     scanf("%i", &opcion);
     fflush(stdin);
@@ -189,6 +191,13 @@ NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMat
             break;
 
         case 4:
+            materia = seleccionarMateria(estudiante->estudiante, estudiante->estudiante.materias);
+            listaMaterias = rendir(estudiante->estudiante.materias, materia.codigo, 0);
+            printf("Materia abandonada con exito\n\n");
+            modificarEstudiante(lista, listaMaterias, legajo);
+            break;
+
+        case 5:
             return estudiante;
             break;
 
@@ -449,9 +458,9 @@ int main() {
     listaMaterias = altaMateria("Algebra I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Analisis II", listaMaterias, 1, 2);
-    eliminarEstudiante(lista,1);
-    eliminarMateria(listaMaterias,1);
-   // iniciarSistema(lista, listaMaterias);
-    imprimirMateriasDelAlumno(listaMaterias);
-    imprimirLista(lista);
+    //eliminarEstudiante(lista,1);
+    //eliminarMateria(listaMaterias,1);
+    iniciarSistema(lista, listaMaterias);
+    //imprimirMateriasDelAlumno(listaMaterias);
+    //imprimirLista(lista);
 }
