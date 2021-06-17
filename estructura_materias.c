@@ -213,7 +213,7 @@ void imprimirListaMaterias(NodoMateria *lista){
             cursor = cursor->proximo;
             if(contador == 5 || cursor == NULL){
                 contadorTotal = contadorTotal + contador;
-                printf("\nPagina anterior / Pagina siguiente (A/S): ");
+                printf("\nPagina anterior / Pagina siguiente / Elegir Pagina Actual (A/S/E): ");
                 char opcion;
                 scanf("%s", &opcion);
                 printf("\n");
@@ -256,6 +256,10 @@ void imprimirListaMaterias(NodoMateria *lista){
                         } 
                         
                         contador = 0;
+                        break;
+                    case 'E':
+                        break;
+                    case 'e':
                         break;
                     default:
                         break;
@@ -304,7 +308,7 @@ void imprimirMateriasDelAlumno(NodoMateria *lista){
             cursor = cursor->proximo;
             if(contador == 5 || cursor == NULL){
                 contadorTotal = contadorTotal + contador;
-                printf("\nPagina anterior / Pagina siguiente (A/S): ");
+                printf("\nPagina anterior / Pagina siguiente / Elegir Pagina Actual (A/S/E): ");
                 char opcion;
                 scanf("%s", &opcion);
                 printf("\n");
@@ -347,6 +351,10 @@ void imprimirMateriasDelAlumno(NodoMateria *lista){
                         } 
                         
                         contador = 0;
+                        break;
+                    case 'E':
+                        break;
+                    case 'e':
                         break;
                     default:
                         break;
