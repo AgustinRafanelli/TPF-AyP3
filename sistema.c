@@ -42,6 +42,18 @@ void darDeAltaMateria(NodoMateria *lista){
     printf("\n Materia dada de alta exitosamente\n\n");
 }
 
+void darDeBajaMateria(NodoMateria *lista){
+    printf("**************************************************\n");
+    printf("            BAJA DE MATERIAS\n");
+    printf("\n");
+    printf("Ingrese el codigo de la materia: ");
+    int codigo;
+    scanf("%i", &codigo);
+    fflush(stdin);
+    if(eliminarMateria(lista, codigo) == true) printf("\n Materia dada de baja exitosamente\n\n");
+    else printf("\n No existe una materia con ese codigo\n\n");
+}
+
 Materia seleccionarMateria(Estudiante estudiante, NodoMateria *listaMaterias){
     Materia materia;
     int codigo;
@@ -98,8 +110,11 @@ NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMat
         case 2:
             materia = seleccionarMateria(estudiante->estudiante, listaMaterias);
             if(verificarCorrelativas(materia, estudiante->estudiante.materias) == true){
-                estudiante->estudiante.materias = agregarMateria(estudiante->estudiante.materias, materia);
-                printf("Inscripto con exito a la materia: %s\n", materia.titulo);
+                if(materia.habilitada == true){
+                    estudiante->estudiante.materias = agregarMateria(estudiante->estudiante.materias, materia);
+                    printf("Inscripto con exito a la materia: %s\n", materia.titulo);
+                }else printf("No se pudo inscribir a la materia (la materia fue dada de baja)\n");
+                
             }else printf("No se pudo inscribir a la materia (no cumple con las correlativas)\n");
             modificarEstudiante(lista, listaMaterias, legajo);
             break;
@@ -212,6 +227,7 @@ void modificarMaterias(NodoMateria *listaMaterias){
     printf("\n");
     printf("1.Lista de materias\n");
     printf("2.Dar de alta materia\n");
+    printf("3.Dar de baja materia\n");
     printf("\n");
     printf("0.Volver al menu principal\n");
     printf("*************************************************\n\n");
@@ -229,6 +245,11 @@ void modificarMaterias(NodoMateria *listaMaterias){
             modificarMaterias(listaMaterias);
             break;
         
+        case 3:
+            darDeBajaMateria(listaMaterias);
+            modificarMaterias(listaMaterias);
+            break;
+
         case 0:
             break;
 

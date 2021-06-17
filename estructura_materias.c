@@ -10,6 +10,7 @@ typedef struct {
     int codigo;
     bool aprobada;
     bool cursando;
+    bool habilitada;
     int correlativas[2];
 } Materia;
 
@@ -97,6 +98,7 @@ NodoMateria *altaMateria(char *titulo, NodoMateria *lista, int correlativa1, int
         strcpy(materia.titulo, titulo);
         materia.aprobada = false;
         materia.cursando = true;
+        materia.habilitada = true;
         materia.notaFinal = NULL;
         materia.correlativas[0] = correlativa1;
         materia.correlativas[1] = correlativa2;
@@ -153,18 +155,20 @@ NodoMateria *rendir(NodoMateria *lista, int codigo, int nota){
     }
 }
 
-void eliminarNodoMaterias (NodoMateria *lista, int posicion){
-    if(lista == NULL || posicion >= largoDeListaMaterias(lista)){
-        return;
-    } else{
-        NodoMateria *cursor = lista;
-        for(int i = 0; i < posicion-1 ;i =i+1){
+bool *eliminarMateria(NodoMateria *lista, int codigo) {
+    NodoMateria *cursor = lista;
+    while(cursor->proximo != NULL) {
+        if(cursor->proximo->materia.codigo == codigo) {
+            cursor->proximo->materia.habilitada = false;
+            return true;
+        }else if(cursor->materia.codigo == codigo){
+            lista->materia.habilitada = false;
+            return true;
+        }else{
             cursor = cursor->proximo;
-        }
-        NodoMateria *proximo = cursor->proximo->proximo;
-        free(cursor->proximo);
-        cursor->proximo = proximo;
+        }       
     }
+    return false;
 }
 
 void imprimirListaMaterias(NodoMateria *lista){
@@ -175,8 +179,10 @@ void imprimirListaMaterias(NodoMateria *lista){
         int contador = 0;
         printf("    Titulo      Codigo\n");
         while (cursor != NULL) {
-            contador = contador + 1;
-            printf("%i.  %s   %d\n", contador, cursor->materia.titulo, cursor->materia.codigo);
+            if(cursor->materia.habilitada == true){
+                contador = contador + 1;
+                printf("%i.  %s   %d\n", contador, cursor->materia.titulo, cursor->materia.codigo);
+            }
             cursor = cursor->proximo;
         }
         printf("\n");
@@ -192,7 +198,7 @@ void imprimirMateriasDelAlumno(NodoMateria *lista){
         printf("    Titulo   Nota   Codigo\n");
         while (cursor != NULL) {
             contador = contador + 1;
-            printf("%i.  %s  %d   %d\n", contador, cursor->materia.titulo, cursor->materia.notaFinal, cursor->materia.codigo);
+            printf("%i.  %s  %d   %d\n", contador, cursor->materia.titulo, cursor->materia.notaFinal, cursor->materia.codigo);    
             cursor = cursor->proximo;
         }
         printf("\n");
