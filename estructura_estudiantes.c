@@ -100,6 +100,7 @@ int largoDeLista(NodoEstudiante *lista){
     }
     return 0;
 }
+
 bool verificarEstudiante(NodoEstudiante *lista, int legajo){
     if (lista == NULL) {
        return false;
@@ -145,6 +146,20 @@ NodoEstudiante *obtenerEstudiante (NodoEstudiante *lista, char *nombre){
     }
 }
 
+Estudiante obtenerEstudianteLegajo (NodoEstudiante *lista, int legajo){
+    Estudiante estudiante;
+    if(lista == NULL){
+        return estudiante;
+    } else{
+        NodoEstudiante *cursor = lista;
+        while(cursor != NULL && cursor->estudiante.legajo != legajo){
+            cursor = cursor->proximo;
+        }
+        if(cursor->estudiante.legajo == legajo) estudiante = cursor->estudiante;
+        return estudiante;  
+    }
+}
+
 NodoEstudiante *obtenerEstudiantesPorEdad (NodoEstudiante *lista, int min, int max){
     NodoEstudiante *listaNueva = crearLista();
     if(lista == NULL){
@@ -161,17 +176,31 @@ NodoEstudiante *obtenerEstudiantesPorEdad (NodoEstudiante *lista, int min, int m
     }
 }
 
-void eliminarNodo (NodoEstudiante *lista, int posicion){
-    if(lista == NULL || posicion >= largoDeLista(lista)){
+void eliminarEstudiante (NodoEstudiante *lista, int legajo){
+    NodoEstudiante *proximo;
+    NodoEstudiante *cursor = lista;
+    if(lista == NULL){
         return;
-    } else{
-        NodoEstudiante *cursor = lista;
-        for(int i = 0; i < posicion-1 ;i =i+1){
+    }else if(cursor->estudiante.legajo == legajo){
+        printf("else if");
+        proximo = cursor->proximo;
+        free(cursor);
+        cursor = proximo;
+    }else{
+        printf("else");
+        while (cursor->proximo != NULL && cursor->proximo->estudiante.legajo != legajo) {
+            printf("while");
             cursor = cursor->proximo;
         }
-        NodoEstudiante *proximo = cursor->proximo->proximo;
-        free(cursor->proximo);
-        cursor->proximo = proximo;
+        if(cursor->proximo->proximo == NULL && cursor->proximo->estudiante.legajo == legajo){
+            proximo = cursor->proximo;
+            free(cursor);
+            cursor = proximo;
+        }else if(cursor->proximo->estudiante.legajo == legajo){
+            proximo = cursor->proximo->proximo;
+            free(cursor->proximo);
+            cursor->proximo = proximo;
+        }
     }
 }
 

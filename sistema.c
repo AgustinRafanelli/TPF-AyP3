@@ -4,6 +4,23 @@
 #include <conio.h>
 #include "estructura_estudiantes.c"
 
+//Random String
+char *randstring(size_t length) {
+
+    static char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";    
+    char *randomString;
+    if (length) {
+        randomString = malloc(length +1); 
+        if (randomString) {        
+            for (int n = 0;n < length;n++) {        
+                int key = rand() % (int) (sizeof(charset) -1);
+                randomString[n] = charset[key];
+            }
+            randomString[length] = '\0';
+        }
+    }
+    return randomString;
+}
 
 void darDeAltaEstudiante(NodoEstudiante *lista){
     printf("**************************************************\n");
@@ -21,6 +38,37 @@ void darDeAltaEstudiante(NodoEstudiante *lista){
     lista = altaEstudiante(nombre, edad, lista);
 
     printf("\n Estudiante agregado con exito\n\n");
+}
+
+void darDeBajaEstudiante(NodoEstudiante *lista){
+    Estudiante estudiante;
+    int legajo;
+    while(estudiante.legajo != legajo){
+        printf("Ingrese el codigo de la materia que desea borrar: ");
+        scanf("%i", &legajo);
+        printf("\n");
+        fflush(stdin);
+        estudiante = obtenerEstudianteLegajo(lista, legajo);
+        if(estudiante.legajo != legajo){
+            printf("Materia no encontrada\n");
+        }
+    }
+    printf("Seguro que desea borrar a %s? (Y/N) ", estudiante.nombre);
+    char opcion;
+    scanf("%s", &opcion);
+    fflush(stdin);
+    switch (opcion)
+    {
+        case 'Y':
+            eliminarEstudiante(lista, estudiante.legajo);
+            break;
+        case 'y':
+            eliminarEstudiante(lista, estudiante.legajo);
+            break;
+
+        default:
+            break;
+    }
 }
 
 void darDeAltaMateria(NodoMateria *lista){
@@ -43,17 +91,35 @@ void darDeAltaMateria(NodoMateria *lista){
 }
 
 void darDeBajaMateria(NodoMateria *lista){
-    printf("**************************************************\n");
-    printf("            BAJA DE MATERIAS\n");
-    printf("\n");
-    printf("Ingrese el codigo de la materia: ");
+    Materia materia;
     int codigo;
-    scanf("%i", &codigo);
+    while(materia.codigo != codigo){
+        printf("Ingrese el codigo de la materia que desea borrar: ");
+        scanf("%i", &codigo);
+        printf("\n");
+        fflush(stdin);
+        materia = obtenerMateria(lista, codigo);
+        if(materia.codigo != codigo){
+            printf("Materia no encontrada\n");
+        }
+    }
+    printf("Seguro que desea borrar %s? (Y/N) ", materia.titulo);
+    char opcion;
+    scanf("%s", &opcion);
     fflush(stdin);
-    if(eliminarMateria(lista, codigo) == true) printf("\n Materia dada de baja exitosamente\n\n");
-    else printf("\n No existe una materia con ese codigo\n\n");
-}
+    switch (opcion)
+    {
+        case 'Y':
+            eliminarMateria(lista, materia.codigo);
+            break;
+        case 'y':
+            eliminarMateria(lista, materia.codigo);
+            break;
 
+        default:
+            break;
+    }
+}
 Materia seleccionarMateria(Estudiante estudiante, NodoMateria *listaMaterias){
     Materia materia;
     int codigo;
@@ -110,11 +176,8 @@ NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMat
         case 2:
             materia = seleccionarMateria(estudiante->estudiante, listaMaterias);
             if(verificarCorrelativas(materia, estudiante->estudiante.materias) == true){
-                if(materia.habilitada == true){
-                    estudiante->estudiante.materias = agregarMateria(estudiante->estudiante.materias, materia);
-                    printf("Inscripto con exito a la materia: %s\n", materia.titulo);
-                }else printf("No se pudo inscribir a la materia (la materia fue dada de baja)\n");
-                
+                estudiante->estudiante.materias = agregarMateria(estudiante->estudiante.materias, materia);
+                printf("Inscripto con exito a la materia: %s\n", materia.titulo);
             }else printf("No se pudo inscribir a la materia (no cumple con las correlativas)\n");
             modificarEstudiante(lista, listaMaterias, legajo);
             break;
@@ -181,8 +244,9 @@ NodoEstudiante *modificarEstudiantes(NodoEstudiante *lista, NodoMateria *listaMa
     printf("\n");
     printf("1.Lista de estudiantes\n");
     printf("2.Dar de alta estudiante\n");
-    printf("3.Buscar por nombre\n");
-    printf("4.Buscar por rango de edad\n");
+    printf("3.Dar de baja estudiante\n");
+    printf("4.Buscar por nombre\n");
+    printf("5.Buscar por rango de edad\n");
     printf("\n");
     printf("0.Volver al menu principal\n");
     printf("*************************************************\n\n");
@@ -201,11 +265,16 @@ NodoEstudiante *modificarEstudiantes(NodoEstudiante *lista, NodoMateria *listaMa
             break;
 
         case 3:
-            lista = buscarEstudiante(lista, listaMaterias);
+            darDeBajaEstudiante(lista);
             modificarEstudiantes(lista, listaMaterias);
             break;
 
         case 4:
+            lista = buscarEstudiante(lista, listaMaterias);
+            modificarEstudiantes(lista, listaMaterias);
+            break;
+
+        case 5:
             lista = buscarEstudianteEdad(lista, listaMaterias);
             modificarEstudiantes(lista, listaMaterias);
             break;
@@ -260,12 +329,83 @@ void modificarMaterias(NodoMateria *listaMaterias){
     }    
 }
 
+void testAltaMaterias(NodoMateria *listaMaterias){
+    printf("\n\nCantidad de usuarios a añadir: \n");   
+    int cantidad;
+    scanf("%i", &cantidad);
+    printf("\n");
+    fflush(stdin);
+    for (int i = 0; i < cantidad; i++)
+    {
+        listaMaterias = altaMateria(randstring(rand()%20), listaMaterias,rand()%largoDeListaMaterias(listaMaterias)-1, rand()%largoDeListaMaterias(listaMaterias)-1 );
+    }
+}
+
+void testAltaEstudiantes(NodoEstudiante *lista){
+    printf("\n\nCantidad de usuarios a aniadir: \n");   
+    int cantidad;
+    scanf("%i", &cantidad);
+    printf("\n");
+    fflush(stdin);
+    for (int i = 0; i < cantidad; i++)
+    {
+        lista = altaEstudiante(randstring(rand()%20), rand()%80, lista);
+    }
+    
+}
+
+void adicionDePruebas (NodoEstudiante *lista, NodoMateria *listaMaterias){
+    printf("**************************************************\n");
+    printf("               ADICION DE PRUEBAS          \n");
+    printf("\n");
+    printf("1.Aniadir estudiantes\n");
+    printf("1.Imprimir estudiantes\n");
+    printf("3.Aniadir materias\n");
+    printf("3.Imprimir materias\n");
+    printf("\n");
+    printf("0.Volver al menu principal\n");
+    printf("*************************************************\n\n");
+    int opcion;
+    scanf("%i", &opcion);
+    fflush(stdin);
+    switch (opcion){
+        case 1:
+            testAltaEstudiantes(lista);
+            adicionDePruebas(lista, listaMaterias);
+            break;
+
+        case 2:
+            imprimirLista(lista);
+            adicionDePruebas(lista, listaMaterias);
+            break;
+        
+        case 3:
+            testAltaMaterias(listaMaterias);
+            adicionDePruebas(lista, listaMaterias);
+            break;
+
+        case 4:
+            imprimirMateriasDelAlumno(listaMaterias);
+            adicionDePruebas(lista, listaMaterias);
+            break;
+        
+        case 0:
+            break;
+
+        default:
+            printf("Seleccione una opcion valida\n\n");
+            adicionDePruebas(lista, listaMaterias);
+            break;
+    }    
+}
+
 void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("**************************************************\n");
     printf("     BIENVENIDO AL SISTEMA DE ESTUDIANTES\n");
     printf("\n");
     printf("1.Modificar estudiantes\n");
     printf("2.Modificar materias\n");
+    printf("3.Adicion de materias/estudiantes de prueba\n");
     printf("\n");
     printf("0.Exit\n");
     printf("*************************************************\n\n");
@@ -283,6 +423,11 @@ void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
             iniciarSistema(lista, listaMaterias);
             break;
 
+        case 3:
+            adicionDePruebas(lista, listaMaterias);
+            iniciarSistema(lista, listaMaterias);
+            break;
+
         case 0:
             break;
 
@@ -292,7 +437,6 @@ void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
             break;
     }
 }
-
 
 int main() {
     NodoEstudiante *lista = crearLista();
@@ -304,6 +448,10 @@ int main() {
     listaMaterias = altaMateria("Analisis I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algebra I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias, 0, 0);
-    //listaMaterias = altaMateria("Analisis II", listaMaterias, 1, 2);
-    iniciarSistema(lista, listaMaterias);
+    listaMaterias = altaMateria("Analisis II", listaMaterias, 1, 2);
+    eliminarEstudiante(lista,1);
+    eliminarMateria(listaMaterias,1);
+   // iniciarSistema(lista, listaMaterias);
+    imprimirMateriasDelAlumno(listaMaterias);
+    imprimirLista(lista);
 }
