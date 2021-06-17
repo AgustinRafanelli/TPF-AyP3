@@ -230,7 +230,7 @@ NodoEstudiante *buscarEstudiante(NodoEstudiante *lista, NodoMateria *listaMateri
     fflush(stdin);
     NodoEstudiante *listaObtenida = obtenerEstudiante(lista, nombre);
     imprimirLista(listaObtenida);
-    return seleccionarEstudiante(listaObtenida, listaMaterias);
+    return seleccionarEstudiante(lista, listaMaterias);
 }
 
 NodoEstudiante *buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMaterias){
@@ -244,7 +244,7 @@ NodoEstudiante *buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMa
     fflush(stdin);
     NodoEstudiante *listaObtenida = obtenerEstudiantesPorEdad(lista, min, max);
     imprimirLista(listaObtenida);
-    return seleccionarEstudiante(listaObtenida, listaMaterias);
+    return seleccionarEstudiante(lista, listaMaterias);
 
 }
 
