@@ -136,7 +136,7 @@ Materia seleccionarMateria(Estudiante estudiante, NodoMateria *listaMaterias){
     return materia;
 }
 
-NodoMateria *rendirMateria(int codigo, NodoMateria *listaMaterias){
+void *rendirMateria(int codigo, NodoMateria *listaMaterias){
     int nota = 0;
     while(nota < 1 || nota > 10){
         printf("Ingrese la nota obtenida: ");
@@ -152,7 +152,7 @@ NodoMateria *rendirMateria(int codigo, NodoMateria *listaMaterias){
     return listaMaterias;
 }
 
-NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias, int legajo){
+void *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias, int legajo){
     NodoEstudiante *estudiante = modificarEstudianteActual(lista, legajo);
     printf("**************************************************\n");
     printf("            MODIFICACION DE ESTUDIANTE\n");
@@ -191,7 +191,7 @@ NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMat
 
         case 4:
             materia = seleccionarMateria(estudiante->estudiante, estudiante->estudiante.materias);
-            listaMaterias = rendir(estudiante->estudiante.materias, materia.codigo, 0);
+            rendir(estudiante->estudiante.materias, materia.codigo, 0);
             printf("Materia abandonada con exito\n\n");
             modificarEstudiante(lista, listaMaterias, legajo);
             break;
@@ -207,7 +207,7 @@ NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMat
     }
 }
 
-NodoEstudiante *seleccionarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
+void *seleccionarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
     int legajo;
     printf("Ingrese legajo (0 para salir): ");
     scanf("%i", &legajo);
@@ -217,23 +217,21 @@ NodoEstudiante *seleccionarEstudiante(NodoEstudiante *lista, NodoMateria *listaM
         printf("Legajo no encontrado\n");
         seleccionarEstudiante(lista, listaMaterias);
     }else if(verificarEstudiante(lista, legajo) == true){
-        return modificarEstudiante(lista, listaMaterias, legajo);
-    }else{
-        return lista;
+        modificarEstudiante(lista, listaMaterias, legajo);
     }
 }
 
-NodoEstudiante *buscarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
+void *buscarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("Ingrese el nombre del estudiante: ");
     char nombre[64];
     scanf("%[^\n]", nombre);
     fflush(stdin);
     NodoEstudiante *listaObtenida = obtenerEstudiante(lista, nombre);
     imprimirLista(listaObtenida);
-    return seleccionarEstudiante(lista, listaMaterias);
+    seleccionarEstudiante(lista, listaMaterias);
 }
 
-NodoEstudiante *buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMaterias){
+void *buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMaterias){
     int min;
     int max;
     printf("Ingrese edad minima: ");
@@ -244,11 +242,11 @@ NodoEstudiante *buscarEstudianteEdad(NodoEstudiante *lista, NodoMateria *listaMa
     fflush(stdin);
     NodoEstudiante *listaObtenida = obtenerEstudiantesPorEdad(lista, min, max);
     imprimirLista(listaObtenida);
-    return seleccionarEstudiante(lista, listaMaterias);
+    seleccionarEstudiante(lista, listaMaterias);
 
 }
 
-NodoEstudiante *modificarEstudiantes(NodoEstudiante *lista, NodoMateria *listaMaterias){
+void *modificarEstudiantes(NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("**************************************************\n");
     printf("             MODIFICACION DE ESTUDIANTES          \n");
     printf("\n");
@@ -280,17 +278,16 @@ NodoEstudiante *modificarEstudiantes(NodoEstudiante *lista, NodoMateria *listaMa
             break;
 
         case 4:
-            lista = buscarEstudiante(lista, listaMaterias);
+            buscarEstudiante(lista, listaMaterias);
             modificarEstudiantes(lista, listaMaterias);
             break;
 
         case 5:
-            lista = buscarEstudianteEdad(lista, listaMaterias);
+            buscarEstudianteEdad(lista, listaMaterias);
             modificarEstudiantes(lista, listaMaterias);
             break;
         
         case 0:
-            return lista;
             break;
 
         default:
@@ -424,7 +421,7 @@ void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
     fflush(stdin);
     switch(opcion){
         case 1:
-            lista = modificarEstudiantes(lista, listaMaterias);
+            modificarEstudiantes(lista, listaMaterias);
             iniciarSistema(lista, listaMaterias);
             break;
 
