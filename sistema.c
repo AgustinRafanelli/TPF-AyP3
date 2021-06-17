@@ -209,15 +209,17 @@ NodoEstudiante *modificarEstudiante(NodoEstudiante *lista, NodoMateria *listaMat
 
 NodoEstudiante *seleccionarEstudiante(NodoEstudiante *lista, NodoMateria *listaMaterias){
     int legajo;
-    printf("Ingrese legajo: ");
+    printf("Ingrese legajo (0 para salir): ");
     scanf("%i", &legajo);
     printf("\n");
     fflush(stdin);
-    if(verificarEstudiante(lista, legajo) == false){
+    if(verificarEstudiante(lista, legajo) == false && legajo != 0){
         printf("Legajo no encontrado\n");
         seleccionarEstudiante(lista, listaMaterias);
-    }else{
+    }else if(verificarEstudiante(lista, legajo) == true){
         return modificarEstudiante(lista, listaMaterias, legajo);
+    }else{
+        return lista;
     }
 }
 
