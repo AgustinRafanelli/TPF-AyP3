@@ -221,7 +221,7 @@ void imprimirLista(NodoEstudiante *lista){
                 printf("%d     %d\n", cursor->estudiante.edad, cursor->estudiante.legajo);
             }else{
                 printf("%i.  %s", contador, cursor->estudiante.nombre);
-                for(int i=strlen(cursor->estudiante.nombre); i>=19; i--){
+                for(int i=strlen(cursor->estudiante.nombre); i<24; i++){
                     printf(" ");
                 }
                 printf("%d     %d\n", cursor->estudiante.edad, cursor->estudiante.legajo);
