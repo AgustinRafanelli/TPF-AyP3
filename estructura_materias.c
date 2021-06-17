@@ -188,7 +188,6 @@ void imprimirListaMaterias(NodoMateria *lista){
         printf("\n    Titulo                                 Codigo\n\n");
         while (cursor != NULL && contador < 5) {
             contador = contador + 1;
-            contadorTotal = contadorTotal + 1;
             if(strlen(cursor->materia.titulo) == 10){
                 printf("%i.  %s                               %d\n", contador, cursor->materia.titulo, cursor->materia.codigo);
             }else if(strlen(cursor->materia.titulo) >= 27){
@@ -213,6 +212,7 @@ void imprimirListaMaterias(NodoMateria *lista){
             
             cursor = cursor->proximo;
             if(contador == 5 || cursor == NULL){
+                contadorTotal = contadorTotal + contador;
                 printf("\nPagina anterior / Pagina siguiente (A/S): ");
                 char opcion;
                 scanf("%s", &opcion);
@@ -226,20 +226,36 @@ void imprimirListaMaterias(NodoMateria *lista){
                         contador = 0;
                         break;
                     case 'A':
-                        contador = 0;
                         cursor = lista;
-                        contadorTotal = contadorTotal-5;
-                        for(int i=0; i<contadorTotal-10; i++){
-                            cursor = cursor->proximo;
-                        }
+                        if(contadorTotal % 5 == 0){
+                            for(int i=0; i<contadorTotal-10; i++){
+                                cursor = cursor->proximo;
+                            }                            
+                            contadorTotal = contadorTotal-10;
+                        }else{
+                            for(int i=0; i<contadorTotal-(5+contador); i++){
+                                cursor = cursor->proximo;
+                            }
+                            contadorTotal = contadorTotal - (10-(5-contador));
+                        } 
+                        
+                        contador = 0;
                         break;
                     case 'a':
-                        contador = 0;
                         cursor = lista;
-                        contadorTotal = contadorTotal-5;
-                        for(int i=0; i<contadorTotal-10; i++){
-                            cursor = cursor->proximo;
-                        }
+                        if(contadorTotal % 5 == 0){
+                            for(int i=0; i<contadorTotal-10; i++){
+                                cursor = cursor->proximo;
+                            }                            
+                            contadorTotal = contadorTotal-10;
+                        }else{
+                            for(int i=0; i<contadorTotal-(5+contador); i++){
+                                cursor = cursor->proximo;
+                            }
+                            contadorTotal = contadorTotal - (10-(5-contador));
+                        } 
+                        
+                        contador = 0;
                         break;
                     default:
                         break;
@@ -260,7 +276,6 @@ void imprimirMateriasDelAlumno(NodoMateria *lista){
         printf("\n       Titulo                      Nota   Codigo  Cursando  Aprobada  Correlativa de\n\n");
         while (cursor != NULL && contador < 5) {
             contador = contador + 1;
-            contadorTotal = contadorTotal + 1;
             char *aprobada;
             char *cursando;
             if(cursor->materia.aprobada == false){aprobada = "No";} else{ aprobada = "Si";}
@@ -288,6 +303,7 @@ void imprimirMateriasDelAlumno(NodoMateria *lista){
             }
             cursor = cursor->proximo;
             if(contador == 5 || cursor == NULL){
+                contadorTotal = contadorTotal + contador;
                 printf("\nPagina anterior / Pagina siguiente (A/S): ");
                 char opcion;
                 scanf("%s", &opcion);
@@ -301,20 +317,36 @@ void imprimirMateriasDelAlumno(NodoMateria *lista){
                         contador = 0;
                         break;
                     case 'A':
-                        contador = 0;
                         cursor = lista;
-                        contadorTotal = contadorTotal-5;
-                        for(int i=0; i<contadorTotal-10; i++){
-                            cursor = cursor->proximo;
-                        }
+                        if(contadorTotal % 5 == 0){
+                            for(int i=0; i<contadorTotal-10; i++){
+                                cursor = cursor->proximo;
+                            }                            
+                            contadorTotal = contadorTotal-10;
+                        }else{
+                            for(int i=0; i<contadorTotal-(5+contador); i++){
+                                cursor = cursor->proximo;
+                            }
+                            contadorTotal = contadorTotal - (10-(5-contador));
+                        } 
+                        
+                        contador = 0;
                         break;
                     case 'a':
-                        contador = 0;
                         cursor = lista;
-                        contadorTotal = contadorTotal-5;
-                        for(int i=0; i<contadorTotal-10; i++){
-                            cursor = cursor->proximo;
-                        }
+                        if(contadorTotal % 5 == 0){
+                            for(int i=0; i<contadorTotal-10; i++){
+                                cursor = cursor->proximo;
+                            }                            
+                            contadorTotal = contadorTotal-10;
+                        }else{
+                            for(int i=0; i<contadorTotal-(5+contador); i++){
+                                cursor = cursor->proximo;
+                            }
+                            contadorTotal = contadorTotal - (10-(5-contador));
+                        } 
+                        
+                        contador = 0;
                         break;
                     default:
                         break;

@@ -477,6 +477,6 @@ int main() {
     //imprimirListaMaterias(listaMaterias);
     //imprimirMateriasDelAlumno(listaMaterias);
     //printf("%i\n", strlen(lista->proximo->estudiante.nombre));
-    imprimirLista(lista);
-    //iniciarSistema(lista, listaMaterias);
+    //imprimirLista(lista);
+    iniciarSistema(lista, listaMaterias);
 }
