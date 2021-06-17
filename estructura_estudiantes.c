@@ -207,9 +207,11 @@ void imprimirLista(NodoEstudiante *lista){
     }else{
         NodoEstudiante *cursor = lista;
         int contador = 0;
+        int contadorTotal = 0;
         printf("\n    Nombre y Apellido      Edad  Legajo\n\n");
-        while (cursor != NULL) {
+        while (cursor != NULL && contador < 5) {
             contador = contador + 1;
+            contadorTotal = contadorTotal + 1;
             if(strlen(cursor->estudiante.nombre) == 19){
                 printf("%i.  %s     %d     %d\n", contador, cursor->estudiante.nombre, cursor->estudiante.edad, cursor->estudiante.legajo);
             }else if(strlen(cursor->estudiante.nombre) < 19){
@@ -226,6 +228,39 @@ void imprimirLista(NodoEstudiante *lista){
                 printf("%d     %d\n", cursor->estudiante.edad, cursor->estudiante.legajo);
             }
             cursor = cursor->proximo;
+            if(contador == 5 || cursor == NULL){
+                printf("\nPagina anterior / Pagina siguiente (A/S): ");
+                char opcion;
+                scanf("%s", &opcion);
+                printf("\n");
+                fflush(stdin);
+                switch (opcion){
+                    case 'S':
+                        contador = 0;
+                        break;
+                    case 's':
+                        contador = 0;
+                        break;
+                    case 'A':
+                        contador = 0;
+                        cursor = lista;
+                        contadorTotal = contadorTotal-5;
+                        for(int i=0; i<contadorTotal-10; i++){
+                            cursor = cursor->proximo;
+                        }
+                        break;
+                    case 'a':
+                        contador = 0;
+                        cursor = lista;
+                        contadorTotal = contadorTotal-5;
+                        for(int i=0; i<contadorTotal-10; i++){
+                            cursor = cursor->proximo;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         printf("\n");
     }

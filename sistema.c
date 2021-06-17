@@ -453,6 +453,14 @@ int main() {
     lista = altaEstudiante("Leopoldo Garcia", 38, lista);
     lista = altaEstudiante("Marcos Galperin", 35, lista);
     lista = altaEstudiante("Juan Ramon Roman Cesc", 35, lista);
+    lista = altaEstudiante("Leonardo Ponce", 30, lista);
+    lista = altaEstudiante("Matias Gimenez", 50, lista);
+    lista = altaEstudiante("Pedro Bruno", 38, lista);
+    lista = altaEstudiante("Marcos Cristian Soto", 35, lista);
+    lista = altaEstudiante("Andrea Ciglone", 35, lista);
+    lista = altaEstudiante("Florencia Pochettino", 30, lista);
+    lista = altaEstudiante("Alberto Fernando", 50, lista);
+    lista = altaEstudiante("Cristian Fernandez", 38, lista);
     NodoMateria *listaMaterias = crearListaMaterias();
     listaMaterias = altaMateria("Analisis I", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algebra I", listaMaterias, 0, 0);
@@ -461,10 +469,14 @@ int main() {
     listaMaterias = altaMateria("Analisis III", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algoritmos y Programacion II", listaMaterias, 0, 0);
     listaMaterias = altaMateria("Algoritmos y Programacion III", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Sistemas de Representacion", listaMaterias, 1, 2);
+    listaMaterias = altaMateria("Disenio Logico", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Mundo Contemporaneo", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Estructura de Datos", listaMaterias, 0, 0);
     //printf("%i", strlen(listaMaterias->materia.titulo));
     //imprimirListaMaterias(listaMaterias);
-    imprimirMateriasDelAlumno(listaMaterias);
+    //imprimirMateriasDelAlumno(listaMaterias);
     //printf("%i\n", strlen(lista->proximo->estudiante.nombre));
-    //imprimirLista(lista);
+    imprimirLista(lista);
     //iniciarSistema(lista, listaMaterias);
 }
