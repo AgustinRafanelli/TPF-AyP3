@@ -13,7 +13,9 @@ Desarrollar un sistema de estudiantes en C. Debe permitir:
 Además cada estudiante puede anotarse en N materias.
 
 -Dar de alta y listar materias
+
 -Anotarse en una materia
+
 -Rendir una materia
 
 El sistema debe poder soportar un gran listado de estudiantes y materias. Utilizar estructuras de datos para almacenar los listados. Decidir si se utiliza ordenamiento de los datos.
@@ -33,7 +35,10 @@ Fecha de entrega: 2021-06-19
 
 Puntos extra:
 
-legajo secuencial
-desanotar materia
-correlatividades
-dar de baja alumno
+Legajo secuencial
+Codigo de materias secuencial
+Dar de baja alumno
+Dar de baja materia 
+Correlatividades
+Abandonar materia
+Compaginado

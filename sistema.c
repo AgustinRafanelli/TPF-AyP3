@@ -336,6 +336,33 @@ void modificarMaterias(NodoMateria *listaMaterias){
     }    
 }
 
+void setDePrueba(NodoEstudiante *lista, NodoMateria *listaMaterias){
+    
+    lista = altaEstudiante("Carlos Saul Menem", 50, lista);
+    lista = altaEstudiante("Leopoldo Garcia", 38, lista);
+    lista = altaEstudiante("Marcos Galperin", 35, lista);
+    lista = altaEstudiante("Juan Ramon Roman Cesc", 35, lista);
+    lista = altaEstudiante("Leonardo Ponce", 30, lista);
+    lista = altaEstudiante("Matias Gimenez", 50, lista);
+    lista = altaEstudiante("Pedro Bruno", 38, lista);
+    lista = altaEstudiante("Marcos Cristian Soto", 35, lista);
+    lista = altaEstudiante("Andrea Ciglone", 35, lista);
+    lista = altaEstudiante("Florencia Pochettino", 30, lista);
+    lista = altaEstudiante("Alberto Fernando", 50, lista);
+    lista = altaEstudiante("Cristian Fernandez", 38, lista);
+    
+    listaMaterias = altaMateria("Algebra I", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Analisis II", listaMaterias, 1, 2);
+    listaMaterias = altaMateria("Analisis III", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Algoritmos y Programacion II", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Algoritmos y Programacion III", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Sistemas de Representacion", listaMaterias, 1, 2);
+    listaMaterias = altaMateria("Disenio Logico", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Mundo Contemporaneo", listaMaterias, 0, 0);
+    listaMaterias = altaMateria("Estructura de Datos", listaMaterias, 0, 0);
+}
+
 void testAltaMaterias(NodoMateria *listaMaterias){
     printf("\n\nCantidad de usuarios a añadir: \n");   
     int cantidad;
@@ -358,17 +385,17 @@ void testAltaEstudiantes(NodoEstudiante *lista){
     {
         lista = altaEstudiante(randstring(rand()%20), rand()%80, lista);
     }
-    
 }
 
 void adicionDePruebas (NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("**************************************************\n");
     printf("               ADICION DE PRUEBAS          \n");
     printf("\n");
-    printf("1.Aniadir estudiantes\n");
-    printf("2.Imprimir estudiantes\n");
-    printf("3.Aniadir materias\n");
-    printf("4.Imprimir materias\n");
+    printf("1.Set de prueba\n");
+    printf("2.Aniadir estudiantes\n");
+    printf("3.Imprimir estudiantes\n");
+    printf("4.Aniadir materias\n");
+    printf("5.Imprimir materias\n");
     printf("\n");
     printf("0.Volver al menu principal\n");
     printf("*************************************************\n\n");
@@ -377,21 +404,26 @@ void adicionDePruebas (NodoEstudiante *lista, NodoMateria *listaMaterias){
     fflush(stdin);
     switch (opcion){
         case 1:
-            testAltaEstudiantes(lista);
+            setDePrueba(lista, listaMaterias);
             adicionDePruebas(lista, listaMaterias);
             break;
 
         case 2:
+            testAltaEstudiantes(lista);
+            adicionDePruebas(lista, listaMaterias);
+            break;
+
+        case 3:
             imprimirLista(lista);
             adicionDePruebas(lista, listaMaterias);
             break;
         
-        case 3:
+        case 4:
             testAltaMaterias(listaMaterias);
             adicionDePruebas(lista, listaMaterias);
             break;
 
-        case 4:
+        case 5:
             imprimirMateriasDelAlumno(listaMaterias);
             adicionDePruebas(lista, listaMaterias);
             break;
@@ -412,7 +444,7 @@ void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
     printf("\n");
     printf("1.Modificar estudiantes\n");
     printf("2.Modificar materias\n");
-    printf("3.Adicion de materias/estudiantes de prueba\n");
+    printf("3.Adicion de pruebas\n");
     printf("\n");
     printf("0.Exit\n");
     printf("*************************************************\n\n");
@@ -447,35 +479,8 @@ void iniciarSistema(NodoEstudiante *lista, NodoMateria *listaMaterias){
 
 int main() {
     NodoEstudiante *lista = crearLista();
-    lista = altaEstudiante("Juan Roman Riquelme", 30, lista);
-    lista = altaEstudiante("Carlos Saul Menem", 50, lista);
-    lista = altaEstudiante("Leopoldo Garcia", 38, lista);
-    lista = altaEstudiante("Marcos Galperin", 35, lista);
-    lista = altaEstudiante("Juan Ramon Roman Cesc", 35, lista);
-    lista = altaEstudiante("Leonardo Ponce", 30, lista);
-    lista = altaEstudiante("Matias Gimenez", 50, lista);
-    lista = altaEstudiante("Pedro Bruno", 38, lista);
-    lista = altaEstudiante("Marcos Cristian Soto", 35, lista);
-    lista = altaEstudiante("Andrea Ciglone", 35, lista);
-    lista = altaEstudiante("Florencia Pochettino", 30, lista);
-    lista = altaEstudiante("Alberto Fernando", 50, lista);
-    lista = altaEstudiante("Cristian Fernandez", 38, lista);
     NodoMateria *listaMaterias = crearListaMaterias();
+    lista = altaEstudiante("Juan Roman Riquelme", 30, lista);
     listaMaterias = altaMateria("Analisis I", listaMaterias, 0, 0);
-    listaMaterias = altaMateria("Algebra I", listaMaterias, 0, 0);
-    listaMaterias = altaMateria("Algoritmos y Programacion I", listaMaterias, 0, 0);
-    listaMaterias = altaMateria("Analisis II", listaMaterias, 1, 2);
-    listaMaterias = altaMateria("Analisis III", listaMaterias, 0, 0);
-    listaMaterias = altaMateria("Algoritmos y Programacion II", listaMaterias, 0, 0);
-    listaMaterias = altaMateria("Algoritmos y Programacion III", listaMaterias, 0, 0);
-    listaMaterias = altaMateria("Sistemas de Representacion", listaMaterias, 1, 2);
-    listaMaterias = altaMateria("Disenio Logico", listaMaterias, 0, 0);
-    listaMaterias = altaMateria("Mundo Contemporaneo", listaMaterias, 0, 0);
-    listaMaterias = altaMateria("Estructura de Datos", listaMaterias, 0, 0);
-    //printf("%i", strlen(listaMaterias->materia.titulo));
-    //imprimirListaMaterias(listaMaterias);
-    //imprimirMateriasDelAlumno(listaMaterias);
-    //printf("%i\n", strlen(lista->proximo->estudiante.nombre));
-    //imprimirLista(lista);
     iniciarSistema(lista, listaMaterias);
 }
