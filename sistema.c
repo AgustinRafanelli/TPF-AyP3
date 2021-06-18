@@ -124,10 +124,11 @@ Materia seleccionarMateria(Estudiante estudiante, NodoMateria *listaMaterias){
     Materia materia;
     int codigo;
     while(materia.codigo != codigo){
-        printf("Ingrese el codigo de la materia: ");
+        printf("Ingrese el codigo de la materia (0 para salir): ");
         scanf("%i", &codigo);
         printf("\n");
         fflush(stdin);
+        if(codigo == 0)return materia;
         materia = obtenerMateria(listaMaterias, codigo);
         if(materia.codigo != codigo){
             printf("Materia no encontrada\n");
