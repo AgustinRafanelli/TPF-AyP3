@@ -167,14 +167,30 @@ void eliminarMateria (NodoMateria **lista, int codigo){
             cursor = cursor->proximo;
         }
         if(cursor->proximo->proximo == NULL && cursor->proximo->materia.codigo == codigo){
-            proximo = cursor->proximo;
-            free(cursor);
-            cursor = proximo;
+            cursor->proximo = NULL;
         }else if(cursor->proximo->materia.codigo == codigo){
             proximo = cursor->proximo->proximo;
             free(cursor->proximo);
             cursor->proximo = proximo;
         }
+    }
+}
+
+double promedio(NodoMateria *lista){
+    if(lista == NULL){
+        return 0;
+    } else{
+        int contador = 0;
+        int sumatoria = 0;
+        NodoMateria *cursor = lista;
+        while(cursor != NULL){
+            if(cursor->materia.cursando == false){
+                contador = contador + 1; 
+                sumatoria = sumatoria + cursor->materia.notaFinal;
+                cursor = cursor->proximo;
+            }
+        }
+        return sumatoria/contador;  
     }
 }
 
@@ -285,7 +301,7 @@ void imprimirMateriasDelAlumno(NodoMateria *lista){
             if(cursor->materia.aprobada == false){aprobada = "No";} else{ aprobada = "Si";}
             if(cursor->materia.cursando == false){cursando = "No";} else{ cursando = "Si";}
             if(strlen(cursor->materia.titulo) == 10){
-                printf("%i.  %s                     %d       %d        %s        %s          %i y %i\n", contador, cursor->materia.titulo, cursor->materia.notaFinal, cursor->materia.codigo, cursando, aprobada,  cursor->materia.correlativas[0], cursor->materia.correlativas[1]);
+                printf("%i.  %s                   %d       %d        %s        %s          %i y %i\n", contador, cursor->materia.titulo, cursor->materia.notaFinal, cursor->materia.codigo, cursando, aprobada,  cursor->materia.correlativas[0], cursor->materia.correlativas[1]);
             }else if(strlen(cursor->materia.titulo) >= 27){
                 printf("%i.  %s", contador, cursor->materia.titulo);
                 for(int i=27-(strlen(cursor->materia.titulo)-27); i>23; i--){

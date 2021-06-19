@@ -190,9 +190,7 @@ void eliminarEstudiante (NodoEstudiante **lista, int legajo){
             cursor = cursor->proximo;
         }
         if(cursor->proximo->proximo == NULL && cursor->proximo->estudiante.legajo == legajo){
-            proximo = cursor->proximo;
-            free(cursor);
-            cursor = proximo;
+            cursor->proximo = NULL;
         }else if(cursor->proximo->estudiante.legajo == legajo){
             proximo = cursor->proximo->proximo;
             free(cursor->proximo);
@@ -208,23 +206,23 @@ void imprimirLista(NodoEstudiante *lista){
         NodoEstudiante *cursor = lista;
         int contador = 0;
         int contadorTotal = 0;
-        printf("\n    Nombre y Apellido      Edad  Legajo\n\n");
+        printf("\n    Nombre y Apellido        Promedio    Edad  Legajo\n\n");
         while (cursor != NULL && contador < 5) {
             contador = contador + 1;
             if(strlen(cursor->estudiante.nombre) == 19){
-                printf("%i.  %s     %d     %d\n", contador, cursor->estudiante.nombre, cursor->estudiante.edad, cursor->estudiante.legajo);
+                printf("%i.  %s         %d        %d     %d\n", contador, cursor->estudiante.nombre, promedio(cursor->estudiante.materias), cursor->estudiante.edad, cursor->estudiante.legajo);
             }else if(strlen(cursor->estudiante.nombre) < 19){
-                printf("%i.  %s     ", contador, cursor->estudiante.nombre);
+                printf("%i.  %s         ", contador, cursor->estudiante.nombre);
                 for(int i=strlen(cursor->estudiante.nombre); i<19; i++){
                     printf(" ");
                 }
-                printf("%d     %d\n", cursor->estudiante.edad, cursor->estudiante.legajo);
+                printf("%d        %d     %d\n", promedio(cursor->estudiante.materias), cursor->estudiante.edad, cursor->estudiante.legajo);
             }else{
-                printf("%i.  %s", contador, cursor->estudiante.nombre);
+                printf("%i.  %s    ", contador, cursor->estudiante.nombre);
                 for(int i=strlen(cursor->estudiante.nombre); i<24; i++){
                     printf(" ");
                 }
-                printf("%d     %d\n", cursor->estudiante.edad, cursor->estudiante.legajo);
+                printf("%d        %d     %d\n", promedio(cursor->estudiante.materias), cursor->estudiante.edad, cursor->estudiante.legajo);
             }
             cursor = cursor->proximo;
             if(contador == 5 || cursor == NULL){

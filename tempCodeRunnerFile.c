@@ -1,1 +1,1 @@
-crearLista
+imprimirLista

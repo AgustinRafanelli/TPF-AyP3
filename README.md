@@ -1,4 +1,4 @@
-# Trabajo practico final - Algoritmo y Programacion 3 - UNTREF (Agustin Rafanelli - Matias Verme)
+# Trabajo practico final - Algoritmos y Programacion 3 - UNTREF (Agustin Rafanelli - Matias Verme)
 
 Consigna:
 
@@ -38,8 +38,12 @@ Puntos extra:
 Legajo secuencial
 Codigo de materias secuencial
 Booleanos
+Impresion de materias de cada alumno
 Dar de baja alumno
 Dar de baja materia 
 Correlatividades
 Abandonar materia
 Compaginado
+Marginado de impresiones 
+Alta Masiva de alumnos
+Alta Masiva de materias

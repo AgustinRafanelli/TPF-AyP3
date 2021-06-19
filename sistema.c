@@ -372,7 +372,7 @@ void testAltaMaterias(NodoMateria *listaMaterias){
     fflush(stdin);
     for (int i = 0; i < cantidad; i++)
     {
-        listaMaterias = altaMateria(randstring(rand()%20), listaMaterias,rand()%largoDeListaMaterias(listaMaterias)-1, rand()%largoDeListaMaterias(listaMaterias)-1 );
+        listaMaterias = altaMateria(randstring(rand()%20), listaMaterias,rand()%largoDeListaMaterias(listaMaterias), rand()%largoDeListaMaterias(listaMaterias));
     }
 }
 
