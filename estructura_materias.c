@@ -176,24 +176,6 @@ void eliminarMateria (NodoMateria **lista, int codigo){
     }
 }
 
-double promedio(NodoMateria *lista){
-    if(lista == NULL){
-        return 0;
-    } else{
-        int contador = 0;
-        int sumatoria = 0;
-        NodoMateria *cursor = lista;
-        while(cursor != NULL){
-            if(cursor->materia.cursando == false){
-                contador = contador + 1; 
-                sumatoria = sumatoria + cursor->materia.notaFinal;
-                cursor = cursor->proximo;
-            }
-        }
-        return sumatoria/contador;  
-    }
-}
-
 void imprimirListaMaterias(NodoMateria *lista){
     if(lista == NULL){
         printf("La lista esta vacia\n");
