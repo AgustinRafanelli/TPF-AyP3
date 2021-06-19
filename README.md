@@ -37,6 +37,7 @@ Puntos extra:
 
 Legajo secuencial
 Codigo de materias secuencial
+Booleanos
 Dar de baja alumno
 Dar de baja materia 
 Correlatividades
