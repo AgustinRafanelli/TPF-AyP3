@@ -35,15 +35,15 @@ Fecha de entrega: 2021-06-19
 
 Puntos extra:
 
-Legajo secuencial
-Codigo de materias secuencial
-Booleanos
-Impresion de materias de cada alumno
-Dar de baja alumno
-Dar de baja materia 
-Correlatividades
-Abandonar materia
-Compaginado
-Marginado de impresiones 
-Alta Masiva de alumnos
-Alta Masiva de materias
+-Legajo secuencial
+-Codigo de materias secuencial
+-Booleanos
+-Impresion de materias de cada alumno
+-Dar de baja alumno
+-Dar de baja materia 
+-Correlatividades
+-Abandonar materia
+-Compaginado
+-Marginado de impresiones 
+-Alta Masiva de alumnos
+-Alta Masiva de materias
