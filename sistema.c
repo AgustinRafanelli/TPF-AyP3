@@ -59,10 +59,10 @@ void darDeBajaEstudiante(NodoEstudiante *lista){
     switch (opcion)
     {
         case 'Y':
-            eliminarEstudiante(lista, estudiante.legajo);
+            eliminarEstudiante(&lista, estudiante.legajo);
             break;
         case 'y':
-            eliminarEstudiante(lista, estudiante.legajo);
+            eliminarEstudiante(&lista, estudiante.legajo);
             break;
 
         default:
@@ -109,10 +109,10 @@ void darDeBajaMateria(NodoMateria *lista){
     switch (opcion)
     {
         case 'Y':
-            eliminarMateria(lista, materia.codigo);
+            eliminarMateria(&lista, materia.codigo);
             break;
         case 'y':
-            eliminarMateria(lista, materia.codigo);
+            eliminarMateria(&lista, materia.codigo);
             break;
 
         default:

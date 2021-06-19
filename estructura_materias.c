@@ -153,15 +153,15 @@ NodoMateria *rendir(NodoMateria *lista, int codigo, int nota){
     }
 }
 
-void eliminarMateria (NodoMateria *lista, int codigo){
+void eliminarMateria (NodoMateria **lista, int codigo){
     NodoMateria *proximo;
-    NodoMateria *cursor = lista;
+    NodoMateria *cursor = *lista;
     if(lista == NULL){
         return;
     } else if(cursor->materia.codigo == codigo){
-        proximo = cursor->proximo;
-        free(cursor);
-        cursor = proximo;
+        proximo = *lista;
+        *lista = (*lista)->proximo;
+        free(proximo);
     }else{
         while (cursor->proximo != NULL && cursor->proximo->materia.codigo != codigo) {
             cursor = cursor->proximo;

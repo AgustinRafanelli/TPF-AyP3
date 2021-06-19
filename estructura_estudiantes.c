@@ -176,15 +176,15 @@ NodoEstudiante *obtenerEstudiantesPorEdad (NodoEstudiante *lista, int min, int m
     }
 }
 
-void eliminarEstudiante (NodoEstudiante *lista, int legajo){
+void eliminarEstudiante (NodoEstudiante **lista, int legajo){
     NodoEstudiante *proximo;
-    NodoEstudiante *cursor = lista;
+    NodoEstudiante *cursor = *lista;
     if(lista == NULL){
         return;
     }else if(cursor->estudiante.legajo == legajo){
-        proximo = cursor->proximo;
-        free(cursor);
-        cursor = proximo;
+        proximo = *lista;
+        *lista = (*lista)->proximo;
+        free(proximo);
     }else{
         while (cursor->proximo != NULL && cursor->proximo->estudiante.legajo != legajo) {
             cursor = cursor->proximo;
